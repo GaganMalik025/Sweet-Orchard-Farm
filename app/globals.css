@@ -9,9 +9,15 @@
   --color-firelight: #e39b4c;
   --color-dusk: #2a3443;
 
-  /* Reserved: this teal appears nowhere on the site except water. */
-  --color-tubewell: #2f6e6b;
-  --color-tubewell-light: #4e9a95;
+  /* Reserved: this teal appears nowhere on the site except water — the
+     pool and the rain dance. It is the only cool colour in a warm palette,
+     which is what makes water read as water without a photograph.
+     `water` and `water-light` are decorative surfaces only. Anything that
+     carries paper-coloured text sits on `water-deep`, which clears 4.5:1
+     against --color-paper; `water` itself is 3.59:1 and would not. */
+  --color-water: #2f8a88;
+  --color-water-light: #5cb5b1;
+  --color-water-deep: #1f6d6a;
 
   /* Segment grounds, morning through night. */
   --color-ground-morning: #f4efe6;

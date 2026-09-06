@@ -65,7 +65,7 @@ export function RainDance() {
               key={i}
               aria-hidden
               className="block h-2 w-1.5 rounded-b-full transition-colors duration-500"
-              style={{ background: on ? "var(--color-tubewell)" : "var(--color-neem)" }}
+              style={{ background: on ? "var(--color-water)" : "var(--color-neem)" }}
             />
           ))}
         </div>
@@ -82,7 +82,7 @@ export function RainDance() {
                 left: `${d.left}%`,
                 height: `${d.height}px`,
                 background:
-                  "linear-gradient(180deg, transparent, var(--color-tubewell-light))",
+                  "linear-gradient(180deg, transparent, var(--color-water-light))",
                 opacity: d.opacity,
                 animation: reduced
                   ? undefined
@@ -100,7 +100,7 @@ export function RainDance() {
         style={{
           opacity: on ? 0.9 : 0,
           background:
-            "linear-gradient(180deg, transparent, var(--color-tubewell) 90%)",
+            "linear-gradient(180deg, transparent, var(--color-water) 90%)",
         }}
       />
 
@@ -111,7 +111,7 @@ export function RainDance() {
           aria-pressed={on}
           className="w-full max-w-xs rounded-full px-5 py-3.5 text-[15px] font-semibold transition-colors md:w-auto"
           style={{
-            background: on ? "var(--color-ink)" : "var(--color-tubewell)",
+            background: on ? "var(--color-ink)" : "var(--color-water-deep)",
             color: "var(--color-paper)",
           }}
         >

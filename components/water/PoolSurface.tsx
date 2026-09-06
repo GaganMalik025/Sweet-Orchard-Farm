@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * The pool is fed by a tubewell, so the water rises into the frame from
- * below — which is literally where it comes from. This is the only place on
- * the site the reserved tubewell teal is allowed to appear.
+ * The pool is filled from the farm's own tubewell, so the water rises into
+ * the frame from below — which is literally where it comes from. This is one
+ * of only two places on the site the reserved water teal is allowed to
+ * appear (the rain dance is the other).
  *
  * Works with no photograph at all.
  */
@@ -48,14 +49,14 @@ export function PoolSurface() {
         >
           <path
             d="M0,22 C100,6 180,34 280,22 C380,10 460,34 560,22 C660,10 740,30 800,20 L800,40 L0,40 Z"
-            fill="var(--color-tubewell)"
+            fill="var(--color-water)"
           />
         </svg>
         <div
           className="absolute inset-x-0 bottom-0 top-7 md:top-9"
           style={{
             background:
-              "linear-gradient(180deg, var(--color-tubewell) 0%, #24534f 100%)",
+              "linear-gradient(180deg, var(--color-water) 0%, var(--color-water-deep) 100%)",
           }}
         />
         <svg
@@ -81,7 +82,7 @@ export function PoolSurface() {
       </div>
 
       <p className="absolute left-4 top-4 max-w-[70%] text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/45">
-        Tubewell-fed · not chlorinated
+        Tubewell-filled · properly chlorinated
       </p>
     </div>
   );

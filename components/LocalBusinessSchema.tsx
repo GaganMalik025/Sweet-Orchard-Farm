@@ -23,7 +23,7 @@ export function LocalBusinessSchema() {
     "@id": `${SITE_URL}/#farm`,
     name: FARM_NAME,
     description:
-      "A quiet farmhouse stay in the Aravalli hills near Gurgaon, with a private tubewell-fed pool, a rain dance, and meals on a fixed daily schedule.",
+      "A quiet farmhouse stay in the Aravalli hills near Gurgaon, with a private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule.",
     url: SITE_URL,
     telephone: PHONE_TEL,
     image: `${SITE_URL}/photos/og.jpg`,
@@ -51,7 +51,7 @@ export function LocalBusinessSchema() {
     maximumAttendeeCapacity: OCCUPANCY.maxGuests,
     amenityFeature: [
       { "@type": "LocationFeatureSpecification", name: "Private swimming pool", value: true },
-      { "@type": "LocationFeatureSpecification", name: "Tubewell-fed water", value: true },
+      { "@type": "LocationFeatureSpecification", name: "Tubewell-filled, chlorinated pool water", value: true },
       { "@type": "LocationFeatureSpecification", name: "Rain dance", value: true },
       { "@type": "LocationFeatureSpecification", name: "Attached washrooms", value: true },
       { "@type": "LocationFeatureSpecification", name: "Meals served on site", value: true },

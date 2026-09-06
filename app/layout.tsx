@@ -21,7 +21,7 @@ const interTight = Inter_Tight({
 
 const TITLE = `${FARM_NAME} — farmhouse stay near Gurgaon`;
 const DESCRIPTION =
-  "A quiet farmhouse stay in the Aravalli hills near Gurgaon. Private tubewell-fed pool, rain dance, and meals on a fixed daily schedule. Sleeps 14.";
+  "A quiet farmhouse stay in the Aravalli hills near Gurgaon. A private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule. Sleeps 14.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

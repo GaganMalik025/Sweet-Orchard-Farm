@@ -21,10 +21,10 @@ export function Afternoon() {
         <div>
           <h3 className="font-display text-[1.9rem] leading-tight">The pool</h3>
           <p className="mt-3 max-w-prose text-[1.02rem] leading-relaxed">
-            Filled straight from our own tubewell. No chlorine, no blue tiles
-            pretending to be the sea — just cold groundwater pulled up from
-            under the Aravallis, which is a different thing entirely on a
-            Haryana afternoon.
+            Filled from our own tubewell, then properly chlorinated and looked
+            after between stays — which is the part that actually matters. It
+            is yours alone while you&rsquo;re here: no sharing it with another
+            booking, no queueing for the shallow end.
           </p>
           <div className="mt-6">
             <PoolSurface />
