@@ -67,6 +67,10 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   formatDetection: { telephone: true },
+  // Google Search Console ownership check.
+  verification: {
+    google: "NeWseGNdEOGOHmSLcPqsF9rmH-9kYAiX-7YS4vy-kaA",
+  },
 };
 
 export default function RootLayout({
