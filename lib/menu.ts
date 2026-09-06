@@ -31,9 +31,6 @@ export const BREAKFAST_CHOICES = [
 /**
  * The set meal. Lunch and dinner run the identical menu — one choice from
  * each category — at their own per-head rates (both ₹500).
- *
- * Raita is printed on the breakfast page of the card but reads as part of
- * this set — confirmed with the owner, it belongs here.
  */
 export const SET_MEAL_CATEGORIES = [
   { category: "Dal", options: ["Dal Makhani", "Mix Dal", "Dal Tadka"] },

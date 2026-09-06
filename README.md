@@ -191,6 +191,6 @@ fact doesn't exist, the site says nothing rather than inventing one:
   constants as the menu, so the arithmetic can't drift.
 - **No tariff.** Room rates aren't published anywhere in the source material,
   so they go through WhatsApp.
-- **Raita** is printed on the breakfast page of the menu card but belongs to
-  the dinner set. It's placed with dinner, with a note explaining the
-  discrepancy to anyone holding the printed card.
+- **Raita** sits with the set meal, matching the printed card. (An earlier
+  revision of the card printed it on the breakfast page; the current one has
+  it under Dinner, so the explanatory note the site used to carry is gone.)

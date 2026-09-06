@@ -63,11 +63,6 @@ export function ChooseOneSet({
           </p>
         </div>
       </div>
-
-      <p className="mt-8 max-w-prose border-l-2 border-current/25 pl-4 text-[13px] leading-relaxed opacity-60">
-        On the printed card the raita sits on the breakfast page. It belongs to
-        this set — pick one with your meal.
-      </p>
     </div>
   );
 }
