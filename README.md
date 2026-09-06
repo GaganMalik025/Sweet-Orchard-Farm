@@ -181,7 +181,14 @@ fact doesn't exist, the site says nothing rather than inventing one:
 - **No fixed hours for the pool or the rain dance.** Guests use them whenever
   they like. They sit in the afternoon stretch of the rail for shape, but the
   copy never claims a window.
-- **No lunch menu.** ₹500 per head, arranged when you book.
+- **Lunch and dinner share one menu.** Identical set meal, one choice per
+  category, at their own per-head rates (both ₹500). Both render the same
+  `ChooseOneSet` component from the same `SET_MEAL_CATEGORIES` data — change
+  a dish once and it updates in both places.
+- **The stay rate (₹1,500 per head) carries no time period.** Whether it is
+  per night or per stay hasn't been confirmed, so the site doesn't say. The
+  worked examples in the "What it costs" section are computed from the same
+  constants as the menu, so the arithmetic can't drift.
 - **No tariff.** Room rates aren't published anywhere in the source material,
   so they go through WhatsApp.
 - **Raita** is printed on the breakfast page of the menu card but belongs to

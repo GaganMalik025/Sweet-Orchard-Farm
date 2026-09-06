@@ -11,7 +11,7 @@ import { ChooseThree } from "@/components/menu/ChooseThree";
 import { ChooseOneSet } from "@/components/menu/ChooseOneSet";
 import { PlateList } from "@/components/menu/PlateList";
 import { PhotoWindow } from "@/components/PhotoWindow";
-import { BEVERAGES, NONVEG_SNACKS, PER_HEAD, VEG_SNACKS, rupees } from "@/lib/menu";
+import { BEVERAGES, NONVEG_SNACKS, PER_HEAD, VEG_SNACKS } from "@/lib/menu";
 
 const seg = (id: string) => {
   const found = SEGMENTS.find((s) => s.id === id);
@@ -47,18 +47,11 @@ export default function Home() {
 
         <RailSegment segment={seg("lunch")}>
           <SegmentHeading segment={seg("lunch")} />
-          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="tnum font-display text-[2rem] leading-none">
-              {rupees(PER_HEAD.lunch)}
-            </span>
-            <span className="text-[14px] uppercase tracking-[0.14em] opacity-55">
-              per head
-            </span>
+          <p className="mb-9 max-w-prose text-[1.05rem] leading-relaxed">
+            The same set as dinner — one thing from each row, cooked to order
+            and brought out together. Tell us your picks when you book.
           </p>
-          <p className="mt-6 max-w-prose text-[1.05rem] leading-relaxed">
-            Lunch is {rupees(PER_HEAD.lunch)} per head, served 1:00&ndash;3:00 PM.
-            Tell us what you&rsquo;d like when you book.
-          </p>
+          <ChooseOneSet price={PER_HEAD.lunch} idPrefix="lunch" />
         </RailSegment>
 
         <RailSegment segment={seg("afternoon")}>
@@ -94,8 +87,9 @@ export default function Home() {
           <p className="mb-9 max-w-prose text-[1.05rem] leading-relaxed">
             Dinner is a set, not a buffet. You pick one thing from each row and
             that is what comes out of the kitchen — hot, all at once, at nine.
+            The menu is the same one you had at lunch.
           </p>
-          <ChooseOneSet />
+          <ChooseOneSet price={PER_HEAD.dinner} idPrefix="dinner" />
         </RailSegment>
 
         <RailSegment segment={seg("night")}>

@@ -1,4 +1,5 @@
 import { Reviews } from "@/components/Reviews";
+import { Rates } from "@/components/Rates";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import {
   ADDRESS_LINE,
@@ -30,10 +31,12 @@ export function Footer() {
         </div>
       </section>
 
+      <Rates />
+
       <section
         id="enquire"
         aria-labelledby="enquire-title"
-        className="bg-ground-morning"
+        className="bg-ground-dust"
       >
         <div className="mx-auto max-w-6xl px-4 py-20 md:px-8 md:py-28">
           <h2
@@ -91,6 +94,7 @@ export function Footer() {
                 ["afternoon", "Pool & rain dance"],
                 ["snacks", "Snacks"],
                 ["dinner", "Dinner"],
+                ["rates", "What it costs"],
                 ["enquire", "Enquire"],
               ].map(([id, label]) => (
                 <li key={id}>

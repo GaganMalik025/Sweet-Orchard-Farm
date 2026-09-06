@@ -9,6 +9,14 @@ export const PER_HEAD = {
   dinner: 500,
 } as const;
 
+/**
+ * Staying without any food.
+ *
+ * Deliberately not labelled per night or per stay — that hasn't been
+ * confirmed, so the site states the rate and nothing more.
+ */
+export const STAY_PER_HEAD = 1500;
+
 /** Breakfast: ₹350 per head, choose any three. */
 export const BREAKFAST_CHOICES = [
   { name: "Bread Toast", rule: "2 toasts per person · extra ₹30 each" },
@@ -21,11 +29,13 @@ export const BREAKFAST_CHOICES = [
 ] as const;
 
 /**
- * Dinner: ₹500 per head, choose one from each category.
+ * The set meal. Lunch and dinner run the identical menu — one choice from
+ * each category — at their own per-head rates (both ₹500).
+ *
  * Raita is printed on the breakfast page of the card but reads as part of
  * this set — confirmed with the owner, it belongs here.
  */
-export const DINNER_CATEGORIES = [
+export const SET_MEAL_CATEGORIES = [
   { category: "Dal", options: ["Dal Makhani", "Mix Dal", "Dal Tadka"] },
   { category: "Paneer & Veg", options: ["Kadai Paneer", "Mix Veg"] },
   {
@@ -37,7 +47,7 @@ export const DINNER_CATEGORIES = [
 ] as const;
 
 /** Given, not chosen. */
-export const DINNER_INCLUDED = "Tawa Roti";
+export const SET_MEAL_INCLUDED = "Tawa Roti";
 
 /** Snacks & starters: à la carte, per plate. */
 export const VEG_SNACKS = [
@@ -70,4 +80,16 @@ export const KITCHEN_RULES = [
   "Guests are kindly requested to respect our staff and their timings.",
 ] as const;
 
-export const rupees = (n: number) => `₹${n}`;
+/**
+ * Indian digit grouping (last three, then pairs): 1500 -> "1,500",
+ * 100000 -> "1,00,000". Written out rather than using toLocaleString so the
+ * output is identical on the server and in every browser, regardless of the
+ * ICU data available.
+ */
+export function rupees(n: number): string {
+  const s = String(Math.abs(Math.trunc(n)));
+  if (s.length <= 3) return `₹${s}`;
+  const last3 = s.slice(-3);
+  const rest = s.slice(0, -3).replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+  return `₹${rest},${last3}`;
+}
