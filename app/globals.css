@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  /* Aravalli day — the palette from the creative direction. */
+  --color-paper: #f4efe6;
+  --color-ink: #241f1a;
+  --color-terracotta: #b85c2e;
+  --color-neem: #3d4a39;
+  --color-firelight: #e39b4c;
+  --color-dusk: #2a3443;
+
+  /* Reserved: this teal appears nowhere on the site except water. */
+  --color-tubewell: #2f6e6b;
+  --color-tubewell-light: #4e9a95;
+
+  /* Segment grounds, morning through night. */
+  --color-ground-morning: #f4efe6;
+  --color-ground-dust: #efe8da;
+  --color-ground-noon: #f8f4e8;
+  --color-ground-afternoon: #e8eeeb;
+  --color-ground-dusk: #d9c7ac;
+  --color-ground-dinner: #33302b;
+  --color-ground-night: #1a2130;
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    background: var(--color-ground-morning);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Times and prices are a timetable: they must line up. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  ::selection {
+    background: var(--color-firelight);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .dark-segment :focus-visible {
+    outline-color: var(--color-firelight);
+  }
+}
+
+/* Dot leaders for the à la carte list — a menu, not a pricing table. */
+.leader {
+  flex: 1 1 auto;
+  margin: 0 0.6rem;
+  border-bottom: 1px dotted currentColor;
+  opacity: 0.35;
+  transform: translateY(-0.28em);
+}
+
+@keyframes sof-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(var(--rise-to, 22%));
+  }
+}
+
+@keyframes sof-drift {
+  0%,
+  100% {
+    transform: translateX(-1.5%);
+  }
+  50% {
+    transform: translateX(1.5%);
+  }
+}
+
+@keyframes sof-fall {
+  from {
+    transform: translateY(-12vh);
+  }
+  to {
+    transform: translateY(112vh);
+  }
+}
+
+@keyframes sof-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(184 92 46 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgb(184 92 46 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(184 92 46 / 0);
+  }
+}

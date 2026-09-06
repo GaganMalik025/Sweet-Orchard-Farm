@@ -1,0 +1,110 @@
+import { SEGMENTS } from "@/lib/schedule";
+import { RailSegment, SegmentHeading } from "@/components/rail/RailSegment";
+import { Masthead } from "@/components/Masthead";
+import { MobileNowBar } from "@/components/clock/MobileNowBar";
+import { GettingHere } from "@/components/GettingHere";
+import { Rooms } from "@/components/Rooms";
+import { Afternoon } from "@/components/Afternoon";
+import { NightClose } from "@/components/NightClose";
+import { Footer } from "@/components/Footer";
+import { ChooseThree } from "@/components/menu/ChooseThree";
+import { ChooseOneSet } from "@/components/menu/ChooseOneSet";
+import { PlateList } from "@/components/menu/PlateList";
+import { PhotoWindow } from "@/components/PhotoWindow";
+import { BEVERAGES, NONVEG_SNACKS, PER_HEAD, VEG_SNACKS, rupees } from "@/lib/menu";
+
+const seg = (id: string) => {
+  const found = SEGMENTS.find((s) => s.id === id);
+  if (!found) throw new Error(`Unknown segment: ${id}`);
+  return found;
+};
+
+export default function Home() {
+  return (
+    <>
+      <MobileNowBar />
+      <Masthead />
+
+      <main>
+        <RailSegment segment={seg("breakfast")}>
+          <SegmentHeading segment={seg("breakfast")} />
+          <p className="mb-9 max-w-prose text-[1.05rem] leading-relaxed">
+            Served on demand — tell us the night before roughly when you want it
+            and the kitchen will be ready.
+          </p>
+          <ChooseThree />
+        </RailSegment>
+
+        <RailSegment segment={seg("arrival")}>
+          <SegmentHeading segment={seg("arrival")} kicker="Whenever you land" />
+          <GettingHere />
+        </RailSegment>
+
+        <RailSegment segment={seg("rooms")}>
+          <SegmentHeading segment={seg("rooms")} kicker="Once you're in" />
+          <Rooms />
+        </RailSegment>
+
+        <RailSegment segment={seg("lunch")}>
+          <SegmentHeading segment={seg("lunch")} />
+          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="tnum font-display text-[2rem] leading-none">
+              {rupees(PER_HEAD.lunch)}
+            </span>
+            <span className="text-[14px] uppercase tracking-[0.14em] opacity-55">
+              per head
+            </span>
+          </p>
+          <p className="mt-6 max-w-prose text-[1.05rem] leading-relaxed">
+            Lunch is {rupees(PER_HEAD.lunch)} per head, served 1:00&ndash;3:00 PM.
+            Tell us what you&rsquo;d like when you book.
+          </p>
+        </RailSegment>
+
+        <RailSegment segment={seg("afternoon")}>
+          <SegmentHeading segment={seg("afternoon")} kicker="No fixed hours" />
+          <Afternoon />
+        </RailSegment>
+
+        <RailSegment segment={seg("snacks")}>
+          <SegmentHeading segment={seg("snacks")} />
+          <p className="mb-10 max-w-prose text-[1.05rem] leading-relaxed">
+            Ordered by the plate, as much or as little as you want. This is the
+            stretch of the evening where nobody is in a hurry.
+          </p>
+          <div className="grid gap-10 md:grid-cols-2 md:gap-x-14">
+            <PlateList heading="Veg" unit="per plate" items={VEG_SNACKS} />
+            <div className="space-y-10">
+              <PlateList heading="Non-veg" unit="per plate" items={NONVEG_SNACKS} />
+              <PlateList heading="Beverages" unit="per cup" items={BEVERAGES} />
+            </div>
+          </div>
+          <div className="mt-12 max-w-2xl">
+            <PhotoWindow
+              src="/photos/dining.jpg"
+              ratio="3:2"
+              label="Snacks being served at Sweet Orchard Farm"
+              caption="Placeholder until the real photographs arrive."
+            />
+          </div>
+        </RailSegment>
+
+        <RailSegment segment={seg("dinner")}>
+          <SegmentHeading segment={seg("dinner")} />
+          <p className="mb-9 max-w-prose text-[1.05rem] leading-relaxed">
+            Dinner is a set, not a buffet. You pick one thing from each row and
+            that is what comes out of the kitchen — hot, all at once, at nine.
+          </p>
+          <ChooseOneSet />
+        </RailSegment>
+
+        <RailSegment segment={seg("night")}>
+          <SegmentHeading segment={seg("night")} />
+          <NightClose />
+        </RailSegment>
+      </main>
+
+      <Footer />
+    </>
+  );
+}
