@@ -119,6 +119,39 @@
   }
 }
 
+/* Calculator reveal: the result assembles the way the time rail does —
+   a rule drawing downward, ticks landing on it one at a time. */
+@keyframes sof-rail-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes sof-tick-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sof-total-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes sof-pulse {
   0% {
     box-shadow: 0 0 0 0 rgb(184 92 46 / 0.55);

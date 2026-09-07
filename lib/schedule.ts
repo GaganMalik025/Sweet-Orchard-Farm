@@ -28,6 +28,23 @@ export interface Segment {
 
 const at = (h: number, m = 0) => h * 60 + m;
 
+/**
+ * The costs block. It sits on the rail as an untimed marker above the first
+ * hour, but it is not part of the day, so it is deliberately kept OUT of
+ * SEGMENTS — nothing here can shift the clock, the marker or rail progress.
+ * `from`/`to` are unused: no status window ever anchors to this id.
+ */
+export const COSTS_BLOCK: Segment = {
+  id: "rates",
+  rail: "—",
+  title: "What it costs",
+  timeLabel: null,
+  kind: "untimed",
+  from: at(8),
+  to: at(8),
+  dark: false,
+};
+
 export const SEGMENTS: Segment[] = [
   {
     id: "breakfast",

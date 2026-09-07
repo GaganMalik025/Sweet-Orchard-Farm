@@ -1,4 +1,7 @@
 import { PER_HEAD, STAY_PER_HEAD, rupees } from "@/lib/menu";
+import { breakdown, perHead, totalFor, type MealSelection } from "@/lib/pricing";
+import { CostCalculator } from "@/components/CostCalculator";
+import { WeddingPrices } from "@/components/WeddingPrices";
 
 /**
  * Every per-head number in one place, immediately before the enquiry form.
@@ -20,42 +23,37 @@ const LINES = [
 interface Example {
   title: string;
   people: number;
-  parts: { label: string; amount: number }[];
+  meals: MealSelection;
 }
 
+/**
+ * Both examples run through the same pricing functions as the calculator
+ * below, so the published figures and the interactive ones can never
+ * disagree.
+ */
 const EXAMPLES: Example[] = [
   {
     title: "Twelve of you, no food",
     people: 12,
-    parts: [{ label: "Stay", amount: STAY_PER_HEAD }],
+    meals: { breakfast: false, lunch: false, dinner: false },
   },
   {
     title: "Ten of you, breakfast and dinner",
     people: 10,
-    parts: [
-      { label: "Stay", amount: STAY_PER_HEAD },
-      { label: "Breakfast", amount: PER_HEAD.breakfast },
-      { label: "Dinner", amount: PER_HEAD.dinner },
-    ],
+    meals: { breakfast: true, lunch: false, dinner: true },
   },
 ];
 
 export function Rates() {
   return (
-    <section id="rates" aria-labelledby="rates-title" className="bg-ground-morning">
-      <div className="mx-auto max-w-6xl px-4 py-20 md:px-8 md:py-28">
-        <h2
-          id="rates-title"
-          className="font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-tight"
-        >
-          What it costs
-        </h2>
-        <p className="mb-10 mt-2 max-w-prose text-[1.02rem] leading-relaxed opacity-75">
-          Everything is charged per head, and meals are added on to the stay —
-          so you only pay for the ones you want.
-        </p>
+    <>
+      <p className="mb-10 max-w-prose text-[1.05rem] leading-relaxed">
+        First, the numbers — it&rsquo;s the thing everyone asks, so there&rsquo;s
+        no sense making you scroll for it. Everything is charged per head, and
+        meals are added on to the stay, so you only pay for the ones you want.
+      </p>
 
-        <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-16">
+      <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-16">
           {/* The rate card */}
           <div>
             <ul className="border-y border-ink/12">
@@ -88,8 +86,9 @@ export function Rates() {
             </h3>
             <div className="grid gap-5 sm:grid-cols-2">
               {EXAMPLES.map((ex) => {
-                const perHead = ex.parts.reduce((sum, p) => sum + p.amount, 0);
-                const total = perHead * ex.people;
+                const lines = breakdown(ex.meals);
+                const each = perHead(ex.meals);
+                const total = totalFor(ex.people, ex.meals);
                 return (
                   <figure
                     key={ex.title}
@@ -100,7 +99,7 @@ export function Rates() {
                     </figcaption>
 
                     <dl className="space-y-1.5">
-                      {ex.parts.map((p) => (
+                      {lines.map((p) => (
                         <div key={p.label} className="flex items-baseline">
                           <dt className="text-[15px] opacity-75">{p.label}</dt>
                           <span aria-hidden className="leader" />
@@ -115,12 +114,12 @@ export function Rates() {
                       <span className="text-[15px] font-medium">Per head</span>
                       <span aria-hidden className="leader" />
                       <span className="tnum shrink-0 text-[15px] font-semibold">
-                        {rupees(perHead)}
+                        {rupees(each)}
                       </span>
                     </div>
 
                     <p className="tnum mt-4 text-[14px] opacity-70">
-                      {rupees(perHead)} × {ex.people} {ex.people === 1 ? "person" : "people"}
+                      {rupees(each)} × {ex.people} {ex.people === 1 ? "person" : "people"}
                     </p>
                     <p className="tnum mt-1 font-display text-[1.9rem] leading-none">
                       {rupees(total)}
@@ -133,9 +132,11 @@ export function Rates() {
               Work out your own the same way: add up the per-head lines you
               want, then multiply by the size of your group.
             </p>
-          </div>
         </div>
       </div>
-    </section>
+
+      <CostCalculator />
+      <WeddingPrices />
+    </>
   );
 }

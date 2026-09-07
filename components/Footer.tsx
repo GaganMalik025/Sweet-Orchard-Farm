@@ -1,5 +1,4 @@
 import { Reviews } from "@/components/Reviews";
-import { Rates } from "@/components/Rates";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import {
   ADDRESS_LINE,
@@ -31,12 +30,10 @@ export function Footer() {
         </div>
       </section>
 
-      <Rates />
-
       <section
         id="enquire"
         aria-labelledby="enquire-title"
-        className="bg-ground-dust"
+        className="bg-ground-morning"
       >
         <div className="mx-auto max-w-6xl px-4 py-20 md:px-8 md:py-28">
           <h2

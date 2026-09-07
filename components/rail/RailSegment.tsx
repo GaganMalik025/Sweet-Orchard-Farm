@@ -3,6 +3,7 @@ import type { Segment } from "@/lib/schedule";
 import { NowMarker } from "@/components/clock/NowMarker";
 
 const GROUND: Record<string, string> = {
+  rates: "var(--color-ground-dust)",
   breakfast: "var(--color-ground-morning)",
   arrival: "var(--color-ground-dust)",
   rooms: "var(--color-ground-morning)",

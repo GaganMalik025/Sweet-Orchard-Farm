@@ -1,9 +1,10 @@
-import { SEGMENTS } from "@/lib/schedule";
+import { COSTS_BLOCK, SEGMENTS } from "@/lib/schedule";
 import { RailSegment, SegmentHeading } from "@/components/rail/RailSegment";
 import { Masthead } from "@/components/Masthead";
 import { MobileNowBar } from "@/components/clock/MobileNowBar";
 import { GettingHere } from "@/components/GettingHere";
 import { Rooms } from "@/components/Rooms";
+import { Rates } from "@/components/Rates";
 import { Afternoon } from "@/components/Afternoon";
 import { NightClose } from "@/components/NightClose";
 import { Footer } from "@/components/Footer";
@@ -26,6 +27,13 @@ export default function Home() {
       <Masthead />
 
       <main>
+        {/* Untimed: the costs block isn't part of the day, but it is the
+            first thing anyone wants after the hero. */}
+        <RailSegment segment={COSTS_BLOCK}>
+          <SegmentHeading segment={COSTS_BLOCK} kicker="Before you ask" />
+          <Rates />
+        </RailSegment>
+
         <RailSegment segment={seg("breakfast")}>
           <SegmentHeading segment={seg("breakfast")} />
           <p className="mb-9 max-w-prose text-[1.05rem] leading-relaxed">

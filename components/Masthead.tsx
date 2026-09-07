@@ -53,8 +53,8 @@ export function Masthead() {
         </div>
 
         <p className="mt-10 max-w-xl border-l-2 border-terracotta/50 pl-4 text-[15px] leading-relaxed opacity-75">
-          Everything below is a day here, in order — from the first paratha at
-          eight to the kitchen shutting at half past ten.
+          First what it costs, and then a day here in order — from the first
+          paratha at eight to the kitchen shutting at half past ten.
         </p>
       </div>
     </header>

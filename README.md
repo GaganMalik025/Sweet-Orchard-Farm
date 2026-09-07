@@ -186,9 +186,14 @@ fact doesn't exist, the site says nothing rather than inventing one:
   `ChooseOneSet` component from the same `SET_MEAL_CATEGORIES` data — change
   a dish once and it updates in both places.
 - **The stay rate (₹1,500 per head) carries no time period.** Whether it is
-  per night or per stay hasn't been confirmed, so the site doesn't say. The
-  worked examples in the "What it costs" section are computed from the same
-  constants as the menu, so the arithmetic can't drift.
+  per night or per stay hasn't been confirmed, so the site doesn't say.
+- **All pricing runs through `lib/pricing.ts`.** The published worked
+  examples and the interactive calculator call the same `perHead` /
+  `totalFor` / `breakdown` functions, so they cannot disagree. The stay
+  charge is always part of the total; meals are add-ons.
+- **Wedding prices are flat, per event, and exclude food.** ₹30,000 up to 50
+  guests, ₹35,000 for 51–80. Styled deliberately unlike the per-head list so
+  they aren't misread as per person.
 - **No tariff.** Room rates aren't published anywhere in the source material,
   so they go through WhatsApp.
 - **Raita** sits with the set meal, matching the printed card. (An earlier
