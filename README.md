@@ -38,12 +38,13 @@ changes, change that file.
 
 ## Adding the real photos
 
-> ### ⚠️ Six slots currently hold **temporary phone photos**
+> ### ⚠️ Seven slots currently hold **temporary phone photos**
 >
 > Added **2026-09-07** as stand-ins. They are ordinary phone-camera snaps,
 > **not** the final professional set, and the proper shoot is expected within
-> **1–2 weeks**. `arrival.jpg`, `dining.jpg`, `rooms.jpg`, `pool-02.jpg`,
-> `rain-dance-02.jpg` and `og.jpg` are all due for replacement — overwrite
+> **1–2 weeks**. `hero.jpg`, `arrival.jpg`, `dining.jpg`, `rooms.jpg`,
+> `pool-02.jpg`, `rain-dance-02.jpg` and `og.jpg` are all due for
+> replacement — `hero.jpg` first, since it opens the page — overwrite
 > them at the same paths when the real photographs land. The same warning is
 > repeated in the doc comment at the top of `components/PhotoWindow.tsx`.
 >
@@ -57,6 +58,7 @@ else needs to change — no layout shift, no code edits.
 
 | Replace this file | Ratio | Status | Where it appears |
 |---|---|---|---|
+| `public/photos/hero.jpg` | 5:4 | ⚠️ **Temp phone photo** | Masthead — the photo beside the intro and contact actions |
 | `public/photos/arrival.jpg` | 3:2 | ⚠️ **Temp phone photo** | Getting here — the approach *(stand-in shows the paved drive, not the kutcha road)* |
 | `public/photos/pool-01.jpg` | 4:5 | Placeholder, unused | Pool, portrait *(the animated `PoolSurface` renders instead; drop a photo in and swap it into `components/Afternoon.tsx` if you'd rather show the real thing)* |
 | `public/photos/pool-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — pool, wide |
@@ -97,6 +99,45 @@ stand-in doesn't show. Revisit both when the real photographs land:
 photo still describes the kutcha road in full — it reads as a description of
 the journey rather than a caption on the image, so it stands on its own
 without a photograph backing it up.
+
+### Contrast
+
+Text colours are held to WCAG AA — 4.5:1 for body text, 3:1 for large text —
+measured by compositing the real painted layers, not by eye. Two palette
+facts follow from that and shouldn't be reverted casually:
+
+- **`--color-terracotta` is `#a04d24`.** It carries text in both directions
+  (as link and phone colour on paper, and as the fill beneath paper-coloured
+  button labels such as *Call now*, *Calculate Cost* and *Send this on
+  WhatsApp*). The original `#b85c2e` scored 3.98:1 and failed both ways.
+- **Muted small caps sit at `opacity-70`, not `opacity-55`.** At 55% the
+  eyebrows and the NowPill label scored 3.56:1 and 3.65:1. At 70% they clear
+  5.69:1 and 5.88:1, and the same lift helps the dark segments too.
+
+A full-page sweep after that change measured 290 text elements: 46 moved from
+fail to pass, and nothing regressed. **44 still fail** — small print at other
+opacity levels (`opacity-40`, `-50`, `-60`) that this change didn't touch,
+mostly notes and unit labels in the pricing and menu sections. Worth a pass
+of its own; the lowest is 2.7:1 on the calculator's *"Your total will appear
+here."* placeholder.
+
+### The masthead photograph
+
+The creative direction rules out "a headline floated over a darkened photo"
+as the generic template look, so the masthead does not do that. The wordmark
+still runs the full width of the container on its own — that is the
+masthead's whole idea — and the photograph sits in the column *underneath*
+it, beside the intro and the contact actions, in the same `PhotoWindow`
+language as every other photo on the site: locked ratio, hairline border.
+
+**No text or control is ever laid over it.** That is the design constraint
+that keeps it legible: there is no overlay, gradient or scrim holding up the
+contrast, because nothing needs one. Keep it that way when the real
+photograph goes in — if a future treatment does put type over the image,
+the contrast has to be re-checked against the pixels behind it.
+
+Below `md` the grid collapses to a single column and the photo follows the
+call-to-action buttons in DOM order, so the buttons stay above it on a phone.
 
 The animated pool and rain dance in `components/Afternoon.tsx` were
 deliberately left in place — `pool-02.jpg` and `rain-dance-02.jpg` are

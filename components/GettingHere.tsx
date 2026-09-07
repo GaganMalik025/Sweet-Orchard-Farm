@@ -16,7 +16,7 @@ export function GettingHere() {
           somewhere well behind you.
         </p>
         <address className="mt-8 not-italic">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] opacity-55">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] opacity-70">
             The address
           </p>
           <p className="mt-1.5 text-[1.05rem]">{ADDRESS_LINE}</p>

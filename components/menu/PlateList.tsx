@@ -20,7 +20,7 @@ export function PlateList({
       <h3 className="mb-1 text-[12px] font-semibold uppercase tracking-[0.18em] opacity-60">
         {heading}
       </h3>
-      <p className="mb-4 text-[13px] italic opacity-55">{unit}</p>
+      <p className="mb-4 text-[13px] italic opacity-70">{unit}</p>
       <ul className="space-y-2.5">
         {items.map((i) => (
           <li key={i.name} className="flex items-baseline">

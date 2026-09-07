@@ -21,7 +21,7 @@ export function ChooseOneSet({
         <span className="tnum font-display text-[2rem] leading-none">
           {rupees(price)}
         </span>
-        <span className="text-[14px] uppercase tracking-[0.14em] opacity-55">
+        <span className="text-[14px] uppercase tracking-[0.14em] opacity-70">
           per head · choose one from each
         </span>
       </p>

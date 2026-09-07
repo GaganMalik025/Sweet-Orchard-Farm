@@ -29,7 +29,7 @@ export function PriceLine({ amount, note }: { amount: number; note: string }) {
       <span className="tnum font-display text-[2rem] leading-none">
         {rupees(amount)}
       </span>
-      <span className="text-[14px] uppercase tracking-[0.14em] opacity-55">
+      <span className="text-[14px] uppercase tracking-[0.14em] opacity-70">
         per head · {note}
       </span>
     </p>

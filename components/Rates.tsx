@@ -64,7 +64,7 @@ export function Rates() {
                 >
                   <span className="min-w-0">
                     <span className="block text-[17px] font-medium">{l.label}</span>
-                    <span className="block text-[13px] opacity-55">{l.note}</span>
+                    <span className="block text-[13px] opacity-70">{l.note}</span>
                   </span>
                   <span aria-hidden className="leader" />
                   <span className="tnum shrink-0 font-display text-[1.5rem] leading-none">

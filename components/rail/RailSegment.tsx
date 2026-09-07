@@ -53,7 +53,7 @@ export function RailSegment({
                 style={{ background: "currentColor", opacity: 0.45 }}
               />
               <span
-                className="tnum block text-[10px] font-semibold uppercase tracking-[0.12em] opacity-55 [writing-mode:vertical-rl] md:text-[13px] md:tracking-[0.08em] md:[writing-mode:horizontal-tb]"
+                className="tnum block text-[10px] font-semibold uppercase tracking-[0.12em] opacity-70 [writing-mode:vertical-rl] md:text-[13px] md:tracking-[0.08em] md:[writing-mode:horizontal-tb]"
                 aria-hidden={segment.rail === "—"}
               >
                 {segment.rail}
@@ -84,11 +84,11 @@ export function SegmentHeading({
   return (
     <header className="mb-8 md:mb-10">
       {segment.timeLabel ? (
-        <p className="tnum mb-2 text-[13px] font-semibold uppercase tracking-[0.16em] opacity-55">
+        <p className="tnum mb-2 text-[13px] font-semibold uppercase tracking-[0.16em] opacity-70">
           {segment.timeLabel} IST
         </p>
       ) : kicker ? (
-        <p className="mb-2 text-[13px] font-semibold uppercase tracking-[0.16em] opacity-55">
+        <p className="mb-2 text-[13px] font-semibold uppercase tracking-[0.16em] opacity-70">
           {kicker}
         </p>
       ) : null}

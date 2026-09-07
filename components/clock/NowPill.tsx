@@ -48,7 +48,7 @@ export function NowPill({ compact = false }: { compact?: boolean }) {
     <div className="inline-flex max-w-full flex-col gap-1.5">
       <div className="inline-flex items-center gap-2.5 rounded-full border border-current/15 bg-white/55 px-4 py-2 backdrop-blur-sm">
         <Dot active={clock.active} ready={clock.ready} />
-        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] opacity-55">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] opacity-70">
           Right now at the farm
         </span>
         <span className="tnum text-[15px] font-semibold">

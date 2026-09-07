@@ -129,7 +129,7 @@ export function CostCalculator() {
                     </span>
                     <span className="min-w-0">
                       <span className="block text-[16px] font-medium">{m.label}</span>
-                      <span className="tnum block text-[13px] opacity-55">{m.note}</span>
+                      <span className="tnum block text-[13px] opacity-70">{m.note}</span>
                     </span>
                   </label>
                 );
@@ -260,7 +260,7 @@ function ResultRail({ result }: { result: Result }) {
           className="absolute -left-[26px] top-[1.1rem] block h-3 w-3 -translate-y-1/2 rounded-full border-2 border-terracotta bg-terracotta"
           style={reduced ? undefined : { animation: "sof-pulse 2.8s ease-out 1" }}
         />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-55">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-70">
           Total Fixed Cost
         </p>
         <p

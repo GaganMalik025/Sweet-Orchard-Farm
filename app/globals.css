@@ -4,7 +4,14 @@
   /* Aravalli day — the palette from the creative direction. */
   --color-paper: #f4efe6;
   --color-ink: #241f1a;
-  --color-terracotta: #b85c2e;
+  /* Terracotta carries text both ways — as `.link`/`.phone` colour on paper
+     and as the fill under paper-coloured button labels — so it has to clear
+     4.5:1 against --color-paper in both directions. #b85c2e, the original,
+     managed only 3.98:1 and failed both. #a04d24 clears at 5.12:1 without
+     changing the hue. Anything darker starts reading brown rather than
+     terracotta. The rgb() literals further down are this same colour and
+     must be changed with it. */
+  --color-terracotta: #a04d24;
   --color-neem: #3d4a39;
   --color-firelight: #e39b4c;
   --color-dusk: #2a3443;
@@ -97,7 +104,7 @@
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.22em;
-  text-decoration-color: rgb(184 92 46 / 0.42);
+  text-decoration-color: rgb(160 77 36 / 0.42);
   transition:
     text-decoration-color 160ms ease,
     color 160ms ease;
@@ -194,12 +201,12 @@
 
 @keyframes sof-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgb(184 92 46 / 0.55);
+    box-shadow: 0 0 0 0 rgb(160 77 36 / 0.55);
   }
   70% {
-    box-shadow: 0 0 0 12px rgb(184 92 46 / 0);
+    box-shadow: 0 0 0 12px rgb(160 77 36 / 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgb(184 92 46 / 0);
+    box-shadow: 0 0 0 0 rgb(160 77 36 / 0);
   }
 }

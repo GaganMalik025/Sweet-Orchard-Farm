@@ -65,7 +65,7 @@ export function Footer() {
             </a>
           </div>
           <div>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] opacity-55">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] opacity-70">
               Call or WhatsApp
             </p>
             <a
@@ -79,7 +79,7 @@ export function Footer() {
             </p>
           </div>
           <nav aria-label="The day">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] opacity-55">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] opacity-70">
               The day
             </p>
             <ul className="mt-2 space-y-1 text-[15px]">

@@ -135,7 +135,7 @@ function ReviewCard({ review }: { review: NormalisedReview }) {
             <span className="font-medium">{review.author}</span>
           )}
           {review.relativeTime && (
-            <span className="ml-1.5 opacity-55">{review.relativeTime}</span>
+            <span className="ml-1.5 opacity-70">{review.relativeTime}</span>
           )}
         </span>
       </figcaption>
