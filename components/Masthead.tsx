@@ -1,61 +1,88 @@
 import { NowPill } from "@/components/clock/NowPill";
+import { PhotoWindow } from "@/components/PhotoWindow";
 import { ADDRESS_LINE, FARM_NAME, PHONE_DISPLAY, PHONE_TEL } from "@/lib/constants";
 
 export function Masthead() {
   return (
     <header className="relative bg-ground-morning">
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 md:px-8 md:pb-24 md:pt-28">
-        <p className="mb-5 text-[12px] font-semibold uppercase tracking-[0.2em] opacity-55">
+        <p className="mb-5 text-[12px] font-semibold uppercase tracking-[0.2em] opacity-70">
           {ADDRESS_LINE}
         </p>
         <h1 className="font-display text-[clamp(2.6rem,10vw,6.5rem)] leading-[0.92] tracking-[-0.03em]">
           {FARM_NAME}
         </h1>
-        <p className="mt-6 max-w-xl text-[clamp(1.05rem,2.4vw,1.3rem)] leading-relaxed">
-          A farmhouse in Gurgaon, tucked into the green under the Aravalli
-          hills. A private pool filled from our own tubewell and properly
-          chlorinated, a rain dance whenever you want it, and a kitchen that
-          keeps proper hours.
-        </p>
-
-        <div className="mt-9">
-          <NowPill />
-        </div>
-
         {/*
-          The hero carries its own call and enquire entry points, in addition
-          to the sticky bar — someone who lands here shouldn't have to hunt
-          for the number. Both are plain links, so they work with no JS: the
-          anchor smooth-scrolls via `scroll-behavior` in globals.css, which
-          already yields to prefers-reduced-motion.
-        */}
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="rounded-full bg-terracotta px-6 py-3.5 text-[15px] font-semibold text-paper transition-opacity hover:opacity-90"
-            >
-              Call now
-            </a>
-            <a
-              href="#enquire"
-              className="rounded-full border border-ink/25 px-6 py-3.5 text-[15px] font-semibold transition-colors hover:bg-ink/5"
-            >
-              Enquire
-            </a>
-          </div>
-          <a
-            href={`tel:${PHONE_TEL}`}
-            className="phone text-[1.05rem]"
-          >
-            {PHONE_DISPLAY}
-          </a>
-        </div>
+          The headline runs the full width of the container — that full-bleed
+          wordmark is the masthead's whole idea, so nothing sits beside it.
+          The photograph drops into the column underneath instead, alongside
+          the intro and the contact actions, which is where the empty paper
+          actually was.
 
-        <p className="mt-10 max-w-xl border-l-2 border-terracotta/50 pl-4 text-[15px] leading-relaxed opacity-75">
-          First what it costs, and then a day here in order — from the first
-          paratha at eight to the kitchen shutting at half past ten.
-        </p>
+          Deliberately NOT a headline floated over a darkened photograph:
+          the creative direction rules that out as the generic template look.
+          The photograph is a framed element in the composition, in the same
+          PhotoWindow language as every other photo on the site — locked
+          ratio, hairline border — and no text or control is ever laid over
+          it, so nothing depends on an overlay for legibility.
+        */}
+        <div className="mt-6 grid gap-10 md:mt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] md:items-start md:gap-14">
+          <div>
+            <p className="max-w-xl text-[clamp(1.05rem,2.4vw,1.3rem)] leading-relaxed">
+              A farmhouse in Gurgaon, tucked into the green under the Aravalli
+              hills. A private pool filled from our own tubewell and properly
+              chlorinated, a rain dance whenever you want it, and a kitchen
+              that keeps proper hours.
+            </p>
+
+            <div className="mt-9">
+              <NowPill />
+            </div>
+
+            {/*
+              The hero carries its own call and enquire entry points, in
+              addition to the sticky bar — someone who lands here shouldn't
+              have to hunt for the number. Both are plain links, so they work
+              with no JS: the anchor smooth-scrolls via `scroll-behavior` in
+              globals.css, which already yields to prefers-reduced-motion.
+            */}
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`tel:${PHONE_TEL}`}
+                  className="rounded-full bg-terracotta px-6 py-3.5 text-[15px] font-semibold text-paper transition-opacity hover:opacity-90"
+                >
+                  Call now
+                </a>
+                <a
+                  href="#enquire"
+                  className="rounded-full border border-ink/25 px-6 py-3.5 text-[15px] font-semibold transition-colors hover:bg-ink/5"
+                >
+                  Enquire
+                </a>
+              </div>
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className="phone text-[1.05rem]"
+              >
+                {PHONE_DISPLAY}
+              </a>
+            </div>
+
+            <p className="mt-10 max-w-xl border-l-2 border-terracotta/50 pl-4 text-[15px] leading-relaxed opacity-75">
+              First what it costs, and then a day here in order — from the
+              first paratha at eight to the kitchen shutting at half past ten.
+            </p>
+          </div>
+
+          <PhotoWindow
+            src="/photos/hero.jpg"
+            ratio="5:4"
+            label={`The house and the lawn at ${FARM_NAME}`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 38vw, 460px"
+            priority
+          />
+        </div>
       </div>
     </header>
   );

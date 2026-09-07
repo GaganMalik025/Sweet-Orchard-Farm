@@ -3,6 +3,7 @@ import Image from "next/image";
 const RATIO: Record<string, string> = {
   "3:2": "aspect-[3/2]",
   "4:5": "aspect-[4/5]",
+  "5:4": "aspect-[5/4]",
   "16:9": "aspect-[16/9]",
 };
 
@@ -13,10 +14,13 @@ const RATIO: Record<string, string> = {
  * no restructuring. See README, "Adding the real photos".
  *
  * TEMPORARY PHOTOS — added 2026-09-07, due for replacement.
- * arrival.jpg, dining.jpg, rooms.jpg, pool-02.jpg, rain-dance-02.jpg and
- * og.jpg all currently hold phone-camera snaps used as stand-ins, NOT the
- * final professional set. The proper shoot is expected within 1–2 weeks;
- * replace those six files (same paths, same ratios) when it lands.
+ * hero.jpg, arrival.jpg, dining.jpg, rooms.jpg, pool-02.jpg,
+ * rain-dance-02.jpg and og.jpg all currently hold phone-camera snaps used
+ * as stand-ins, NOT the final professional set. The proper shoot is
+ * expected within 1–2 weeks; replace those seven files (same paths, same
+ * ratios) when it lands. hero.jpg is the one to prioritise — it is the
+ * first thing anyone sees, and the stand-in is only 920px wide, which is
+ * just barely enough for its frame on a 2x display.
  *
  * The closing section no longer renders a photo slot at all: the phone batch
  * was shot entirely in daylight, and a daytime frame under "the kitchen
@@ -38,13 +42,17 @@ export function PhotoWindow({
   caption,
   dark = false,
   priority = false,
+  sizes = "(max-width: 768px) 100vw, 50vw",
 }: {
   src: string;
-  ratio: "3:2" | "4:5" | "16:9";
+  ratio: "3:2" | "4:5" | "5:4" | "16:9";
   label: string;
   caption?: string;
   dark?: boolean;
   priority?: boolean;
+  /** Override when the slot is not ~half the container, so the browser
+   *  doesn't fetch a larger variant than the frame can use. */
+  sizes?: string;
 }) {
   return (
     <figure className="w-full">
@@ -59,7 +67,7 @@ export function PhotoWindow({
           src={src}
           alt={label}
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes={sizes}
           priority={priority}
           className="object-cover"
         />
