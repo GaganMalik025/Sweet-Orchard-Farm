@@ -13,3 +13,7 @@ build
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+
+# raw phone-camera uploads — the cropped, renamed, web-sized versions in
+# public/photos are what the site actually serves
+temp photos/

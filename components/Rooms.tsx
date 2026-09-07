@@ -60,7 +60,6 @@ export function Rooms() {
         src="/photos/rooms.jpg"
         ratio="3:2"
         label="A room at Sweet Orchard Farm"
-        caption="Placeholder until the real photographs arrive."
       />
     </div>
   );

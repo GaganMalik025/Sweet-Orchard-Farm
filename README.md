@@ -38,21 +38,73 @@ changes, change that file.
 
 ## Adding the real photos
 
+> ### ⚠️ Six slots currently hold **temporary phone photos**
+>
+> Added **2026-09-07** as stand-ins. They are ordinary phone-camera snaps,
+> **not** the final professional set, and the proper shoot is expected within
+> **1–2 weeks**. `arrival.jpg`, `dining.jpg`, `rooms.jpg`, `pool-02.jpg`,
+> `rain-dance-02.jpg` and `og.jpg` are all due for replacement — overwrite
+> them at the same paths when the real photographs land. The same warning is
+> repeated in the doc comment at the top of `components/PhotoWindow.tsx`.
+>
+> **Two of them also changed the copy around them.** See *Copy tied to a
+> stand-in* below — that wording needs revisiting when the photos are
+> replaced.
+
 Every photo slot has a **locked aspect ratio**. Replace the file at the exact
 path below, keeping the same filename and roughly the same ratio, and nothing
 else needs to change — no layout shift, no code edits.
 
-| Replace this file | Ratio | Where it appears |
+| Replace this file | Ratio | Status | Where it appears |
+|---|---|---|---|
+| `public/photos/arrival.jpg` | 3:2 | ⚠️ **Temp phone photo** | Getting here — the approach *(stand-in shows the paved drive, not the kutcha road)* |
+| `public/photos/pool-01.jpg` | 4:5 | Placeholder, unused | Pool, portrait *(the animated `PoolSurface` renders instead; drop a photo in and swap it into `components/Afternoon.tsx` if you'd rather show the real thing)* |
+| `public/photos/pool-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — pool, wide |
+| `public/photos/rain-dance-01.jpg` | 4:5 | Placeholder, unused | Rain dance, portrait *(same note as pool-01)* |
+| `public/photos/rain-dance-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — rain dance, wide, people under it |
+| `public/photos/rooms.jpg` | 3:2 | ⚠️ **Temp phone photo** | The rooms |
+| `public/photos/dining.jpg` | 3:2 | ⚠️ **Temp phone photo** | Snacks & starters *(stand-in shows the garden seating, not a laid table)* |
+| `public/photos/night.jpg` | 16:9 | **Not rendered** | The kitchen closes — *the section is deliberately text-only; see `components/NightClose.tsx`* |
+| `public/photos/og.jpg` | 1200×630 | ⚠️ **Temp phone photo** | Social preview card (WhatsApp, Twitter, Facebook) |
+
+**The closing section renders no photo at all.** The phone batch was shot
+entirely in daylight, and a daytime frame under a section about the kitchen
+shutting at 10:30 PM would be its own kind of misleading — so rather than
+leave a placeholder graphic sitting there, `components/NightClose.tsx` drops
+the slot and lays the section out as a text-only block.
+
+That is meant to be reversible. Once real night photographs exist, the doc
+comment at the top of `NightClose.tsx` gives the exact three-line change that
+puts a `PhotoWindow` back — re-import it, restore the two-column grid wrapper,
+add the element. Nothing outside that file is involved. The `night.jpg`
+placeholder file is left in `public/photos` so the path stays valid.
+
+**Shot list for the real photographs** — three subjects nothing in the phone
+batch covers: the **kutcha approach road** itself, a **laid table with food on
+it**, and **anything after dark**.
+
+### Copy tied to a stand-in
+
+Two slots had their image copy rewritten so it doesn't claim something the
+stand-in doesn't show. Revisit both when the real photographs land:
+
+| File | What changed | Why |
 |---|---|---|
-| `public/photos/arrival.jpg` | 3:2 | Getting here — the kutcha approach road |
-| `public/photos/pool-01.jpg` | 4:5 | Pool, portrait *(currently unused — the animated pool renders instead; drop a photo in and swap it into `components/Afternoon.tsx` if you'd rather show the real thing)* |
-| `public/photos/pool-02.jpg` | 3:2 | Afternoon — pool, wide |
-| `public/photos/rain-dance-01.jpg` | 4:5 | Rain dance, portrait *(same note as pool-01)* |
-| `public/photos/rain-dance-02.jpg` | 3:2 | Afternoon — rain dance, wide, people under it |
-| `public/photos/rooms.jpg` | 3:2 | The rooms |
-| `public/photos/dining.jpg` | 3:2 | Snacks & starters — the table |
-| `public/photos/night.jpg` | 16:9 | The kitchen closes |
-| `public/photos/og.jpg` | 1200×630 | Social preview card (WhatsApp, Twitter, Facebook) |
+| `components/GettingHere.tsx` | Caption is now *“The drive up to the house, once the rough stretch is behind you.”* — it was *“The last kutcha stretch”*. Alt text follows. | The stand-in is interlocking pavers. The old caption labelled the pictured surface unpaved, which the photo flatly contradicts. |
+| `app/page.tsx` | Alt text is now *“Garden table and chairs on the lawn”* — it was *“Snacks being served”*. | Nothing is being served in the stand-in. |
+
+**The prose is untouched in both cases.** The paragraph beside the arrival
+photo still describes the kutcha road in full — it reads as a description of
+the journey rather than a caption on the image, so it stands on its own
+without a photograph backing it up.
+
+The animated pool and rain dance in `components/Afternoon.tsx` were
+deliberately left in place — `pool-02.jpg` and `rain-dance-02.jpg` are
+separate photo slots below them, so the interactive set-pieces are untouched.
+
+The raw phone uploads are **not** in the repo: `temp photos/` is gitignored,
+since the cropped, renamed, web-sized files in `public/photos` are what the
+site actually serves.
 
 **Rules**
 
@@ -65,8 +117,10 @@ else needs to change — no layout shift, no code edits.
 - **Do `og.jpg` last** — it's the image that shows when someone shares the
   link, so make it the best one you have.
 
-The current files are generated placeholders in the site's own palette, each
-labelled with its slot and ratio.
+Slots marked *Placeholder* above are generated images in the site's own
+palette, each labelled with its slot and ratio. Slots marked *Temp phone
+photo* are real photographs of the farm, cropped to the locked ratio and
+compressed for the web — good enough to ship, but replace them.
 
 ---
 

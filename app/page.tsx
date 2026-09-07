@@ -84,8 +84,7 @@ export default function Home() {
             <PhotoWindow
               src="/photos/dining.jpg"
               ratio="3:2"
-              label="Snacks being served at Sweet Orchard Farm"
-              caption="Placeholder until the real photographs arrive."
+              label="Garden table and chairs on the lawn at Sweet Orchard Farm"
             />
           </div>
         </RailSegment>

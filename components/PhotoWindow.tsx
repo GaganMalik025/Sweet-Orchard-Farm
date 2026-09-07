@@ -11,6 +11,25 @@ const RATIO: Record<string, string> = {
  * dropped in at the same path, this renders a placeholder in the site's own
  * palette. Swapping the file changes pixels and nothing else — no reflow,
  * no restructuring. See README, "Adding the real photos".
+ *
+ * TEMPORARY PHOTOS — added 2026-09-07, due for replacement.
+ * arrival.jpg, dining.jpg, rooms.jpg, pool-02.jpg, rain-dance-02.jpg and
+ * og.jpg all currently hold phone-camera snaps used as stand-ins, NOT the
+ * final professional set. The proper shoot is expected within 1–2 weeks;
+ * replace those six files (same paths, same ratios) when it lands.
+ *
+ * The closing section no longer renders a photo slot at all: the phone batch
+ * was shot entirely in daylight, and a daytime frame under "the kitchen
+ * closes" would read as a lie, so NightClose.tsx is deliberately text-only.
+ * Putting it back is a local change documented in that file.
+ *
+ * Two of these carry copy that was rewritten to match what the stand-in
+ * actually shows, and that copy should be revisited when the photo is
+ * replaced: arrival.jpg pictures the paved drive up to the house, not the
+ * kutcha stretch (GettingHere.tsx), and dining.jpg pictures the garden
+ * seating rather than a laid table (app/page.tsx). The kutcha road is
+ * still described in full in the prose beside the arrival photo.
+ * See README, "Adding the real photos", for the state of every slot.
  */
 export function PhotoWindow({
   src,
