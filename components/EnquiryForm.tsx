@@ -175,7 +175,7 @@ export function EnquiryForm() {
             href={fallback}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold underline decoration-terracotta underline-offset-4"
+            className="link font-semibold"
           >
             WhatsApp didn&rsquo;t open — tap here
           </a>

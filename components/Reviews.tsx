@@ -54,7 +54,7 @@ export function Reviews() {
         rel="noopener noreferrer"
         className="block max-w-md rounded-sm border border-current/20 p-6 transition-colors hover:bg-current/5"
       >
-        <p className="text-[17px] font-medium">
+        <p className="link text-[17px] font-medium">
           Read what guests have said on Google →
         </p>
         <p className="mt-1 text-[14px] opacity-60">
@@ -93,7 +93,7 @@ export function Reviews() {
           href={data.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline decoration-current/40 underline-offset-4 opacity-75 hover:opacity-100"
+          className="link"
         >
           All reviews on Google →
         </a>
@@ -127,7 +127,7 @@ function ReviewCard({ review }: { review: NormalisedReview }) {
               href={review.authorUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium underline decoration-current/30 underline-offset-2"
+              className="link font-medium"
             >
               {review.author}
             </a>

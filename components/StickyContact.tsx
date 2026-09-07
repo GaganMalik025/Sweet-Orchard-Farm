@@ -51,7 +51,7 @@ export function StickyContact() {
               </a>
               <a
                 href={`tel:${PHONE_TEL}`}
-                className="shrink-0 px-3 py-3 text-[14px] underline decoration-ink/30 underline-offset-4 opacity-70 transition-opacity hover:opacity-100"
+                className="link shrink-0 px-3 py-3 text-[14px]"
                 aria-label={`Call ${PHONE_DISPLAY}`}
               >
                 Call

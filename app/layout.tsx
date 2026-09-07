@@ -19,9 +19,9 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
-const TITLE = `${FARM_NAME} — farmhouse stay near Gurgaon`;
+const TITLE = `${FARM_NAME} — farmhouse stay in Gurgaon`;
 const DESCRIPTION =
-  "A quiet farmhouse stay in the Aravalli hills near Gurgaon. A private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule. Sleeps 14.";
+  "A quiet farmhouse in Gurgaon, tucked into the green under the Aravalli hills. A private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule. Sleeps 14.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/" },
   keywords: [
+    // Both phrasings are kept: the farm is inside Gurgaon, but "near
+    // Gurgaon" is how people actually search for a farmhouse stay.
+    "farmhouse stay in Gurgaon",
     "farmhouse stay near Gurgaon",
     "Aravalli farm stay",
     "private pool farmhouse Haryana",

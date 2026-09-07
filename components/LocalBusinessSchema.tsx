@@ -23,7 +23,7 @@ export function LocalBusinessSchema() {
     "@id": `${SITE_URL}/#farm`,
     name: FARM_NAME,
     description:
-      "A quiet farmhouse stay in the Aravalli hills near Gurgaon, with a private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule.",
+      "A quiet farmhouse in Gurgaon, tucked into the green under the Aravalli hills, with a private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule.",
     url: SITE_URL,
     telephone: PHONE_TEL,
     image: `${SITE_URL}/photos/og.jpg`,

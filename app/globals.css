@@ -82,6 +82,46 @@
   }
 }
 
+/*
+ * Links and phone numbers share one treatment so they read as the same
+ * kind of thing: terracotta on light grounds, firelight on dark ones, with
+ * a hairline underline set well clear of the baseline that firms up on
+ * hover. No new colours, and nothing that looks like a browser default.
+ *
+ * `.phone` is the same pattern with tabular figures and a touch more
+ * weight, so a number reads as contact information rather than as prose.
+ */
+.link,
+.phone {
+  color: var(--color-terracotta);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: rgb(184 92 46 / 0.42);
+  transition:
+    text-decoration-color 160ms ease,
+    color 160ms ease;
+}
+
+.link:hover,
+.phone:hover {
+  text-decoration-color: currentColor;
+}
+
+.phone {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Dark grounds: dinner, the closing block, the footer. */
+.dark-segment .link,
+.dark-segment .phone {
+  color: var(--color-firelight);
+  text-decoration-color: rgb(227 155 76 / 0.45);
+}
+
 /* Dot leaders for the à la carte list — a menu, not a pricing table. */
 .leader {
   flex: 1 1 auto;

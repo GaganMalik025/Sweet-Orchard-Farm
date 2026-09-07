@@ -24,7 +24,7 @@ export function GettingHere() {
             href={MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-block text-[15px] underline decoration-current/40 underline-offset-4 hover:decoration-current"
+            className="link mt-3 inline-block text-[15px]"
           >
             Open in Google Maps →
           </a>

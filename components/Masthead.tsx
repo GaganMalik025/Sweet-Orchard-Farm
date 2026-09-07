@@ -12,10 +12,10 @@ export function Masthead() {
           {FARM_NAME}
         </h1>
         <p className="mt-6 max-w-xl text-[clamp(1.05rem,2.4vw,1.3rem)] leading-relaxed">
-          A farmhouse in the Aravalli hills, an hour or so out of Gurgaon. A
-          private pool filled from our own tubewell and properly chlorinated, a
-          rain dance whenever you want it, and a kitchen that keeps proper
-          hours.
+          A farmhouse in Gurgaon, tucked into the green under the Aravalli
+          hills. A private pool filled from our own tubewell and properly
+          chlorinated, a rain dance whenever you want it, and a kitchen that
+          keeps proper hours.
         </p>
 
         <div className="mt-9">
@@ -46,7 +46,7 @@ export function Masthead() {
           </div>
           <a
             href={`tel:${PHONE_TEL}`}
-            className="tnum text-[1.05rem] font-medium underline decoration-ink/25 underline-offset-4 transition-colors hover:decoration-ink/60"
+            className="phone text-[1.05rem]"
           >
             {PHONE_DISPLAY}
           </a>

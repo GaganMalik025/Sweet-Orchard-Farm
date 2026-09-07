@@ -50,7 +50,7 @@ export function Footer() {
         </div>
       </section>
 
-      <footer className="bg-ground-night text-paper">
+      <footer className="dark-segment bg-ground-night text-paper">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-3 md:px-8 md:py-20">
           <div>
             <p className="font-display text-[1.6rem] leading-tight">{FARM_NAME}</p>
@@ -59,7 +59,7 @@ export function Footer() {
               href={MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-block text-[14px] underline decoration-paper/40 underline-offset-4 opacity-80 hover:opacity-100"
+              className="link mt-3 inline-block text-[14px]"
             >
               Google Maps →
             </a>
@@ -70,7 +70,7 @@ export function Footer() {
             </p>
             <a
               href={`tel:${PHONE_TEL}`}
-              className="tnum mt-2 block text-[1.25rem] font-medium"
+              className="phone mt-2 block text-[1.25rem]"
             >
               {PHONE_DISPLAY}
             </a>
@@ -97,7 +97,7 @@ export function Footer() {
                 <li key={id}>
                   <a
                     href={`#${id}`}
-                    className="opacity-75 underline decoration-transparent underline-offset-4 transition hover:decoration-paper/50 hover:opacity-100"
+                    className="underline decoration-transparent underline-offset-4 opacity-75 transition hover:decoration-firelight/60 hover:opacity-100"
                   >
                     {label}
                   </a>
