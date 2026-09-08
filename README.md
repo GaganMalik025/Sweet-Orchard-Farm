@@ -44,7 +44,7 @@ changes, change that file.
 > **not** the final professional set, and the proper shoot is expected within
 > **1–2 weeks**. `hero.jpg`, `arrival.jpg`, `dining.jpg`, `rooms.jpg`,
 > `pool-02.jpg`, `rain-dance-02.jpg` and `og.jpg` are all due for
-> replacement — `hero.jpg` first, since it opens the page — overwrite
+> replacement — overwrite
 > them at the same paths when the real photographs land. The same warning is
 > repeated in the doc comment at the top of `components/PhotoWindow.tsx`.
 >
@@ -58,7 +58,7 @@ else needs to change — no layout shift, no code edits.
 
 | Replace this file | Ratio | Status | Where it appears |
 |---|---|---|---|
-| `public/photos/hero.jpg` | 5:4 | ⚠️ **Temp phone photo** | Masthead — the photo beside the intro and contact actions |
+| `public/photos/hero.jpg` | 16:9 | ⚠️ **Temp phone photo** | Masthead — full-bleed background, blurred *(not a `PhotoWindow` slot; rendered directly by `Masthead.tsx`)* |
 | `public/photos/arrival.jpg` | 3:2 | ⚠️ **Temp phone photo** | Getting here — the approach *(stand-in shows the paved drive, not the kutcha road)* |
 | `public/photos/pool-01.jpg` | 4:5 | Placeholder, unused | Pool, portrait *(the animated `PoolSurface` renders instead; drop a photo in and swap it into `components/Afternoon.tsx` if you'd rather show the real thing)* |
 | `public/photos/pool-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — pool, wide |
@@ -123,21 +123,67 @@ here."* placeholder.
 
 ### The masthead photograph
 
-The creative direction rules out "a headline floated over a darkened photo"
-as the generic template look, so the masthead does not do that. The wordmark
-still runs the full width of the container on its own — that is the
-masthead's whole idea — and the photograph sits in the column *underneath*
-it, beside the intro and the contact actions, in the same `PhotoWindow`
-language as every other photo on the site: locked ratio, hairline border.
+The masthead is a full-bleed photograph of the farm, deliberately blurred,
+under a vignette mixed from `--color-dusk`.
 
-**No text or control is ever laid over it.** That is the design constraint
-that keeps it legible: there is no overlay, gradient or scrim holding up the
-contrast, because nothing needs one. Keep it that way when the real
-photograph goes in — if a future treatment does put type over the image,
-the contrast has to be re-checked against the pixels behind it.
+**This reverses an earlier decision, on purpose.** The creative direction
+rules out "a headline over a darkened photo" as the generic template look,
+and an earlier revision honoured that literally by framing the photo beside
+the text instead. The current treatment goes the other way, and leans on two
+things to keep it from being the generic pattern:
 
-Below `md` the grid collapses to a single column and the photo follows the
-call-to-action buttons in DOM order, so the buttons stay above it on a phone.
+- **The blur is the point, not a workaround.** The photograph reads as
+  atmosphere — shapes, colour, the light off the white walls and the green —
+  rather than as a picture you are meant to inspect. It is also what makes a
+  1280px phone snap safe to stretch across a 2560px display: there is no fine
+  detail left to go soft. Compared at 8, 10, 12 and 22px and settled at
+  **10px**: soft enough to be atmosphere, specific enough that you can see a
+  white house with a red tile roof and palms in front of it within a second.
+  At 22px the building stopped being a building; at 8px it still read as a
+  photograph someone failed to focus. No pixels show at 10px — checked by
+  zooming 2x into the highest-contrast area in the frame, the white wall
+  against the red roof tiles.
+- **The vignette is dusk indigo, never black.** Every stop is
+  `color-mix`ed from `var(--color-dusk)`, so re-tinting that token re-tints
+  the masthead. A black scrim is exactly what makes this pattern look like
+  everyone else's.
+
+#### The vignette is measured, not eyeballed
+
+Text over a photograph has no single background colour, so it can't be
+checked the way flat text can. The real composite — the photo, blurred, under
+all three layers — is rebuilt in a canvas and sampled pixel by pixel under
+every text box, taking the **worst** pixel.
+
+That measurement drove the shape. An even wash dark enough to carry the text
+flattened the photograph everywhere, so the darkness is concentrated where
+the words are instead: held almost flat across the left 46%, then falling
+away steeply, which buys the right-hand side back for the picture. A vertical
+pass pulls down the sky, which is the brightest thing in the frame and sits
+directly behind the eyebrow and the wordmark.
+
+Softening the blur costs contrast — a less-blurred photograph has more local
+variation, so text sits over brighter pixels. Going from 22px to 10px did not
+break anything outright (the tightest, the phone number, held at 4.83) but it
+thinned the worst margin to +0.26, which is not enough to trust at viewport
+widths that crop the photograph differently. The vignette was strengthened to
+recover it rather than the blur being put back. Past the current values there
+is nothing left to gain: the floor becomes the Call now button at 5.12, which
+sits on its own terracotta fill and never touches the photograph.
+
+**The binding constraint is the phone number.** `.phone` is firelight on dark
+grounds — a light amber — so it needs a genuinely dark backdrop to clear
+4.5:1. It, not the wordmark, sets how heavy the left side has to be. The
+address eyebrow also drops its usual `opacity-70` here and runs at full
+strength; muted, it measured 3.15:1 against the bright end of the sky.
+
+Worst-case ratios at 1470px wide, down the page: **5.41, 4.97** (wordmark,
+large text, needs 3), **9.60, 7.14, 13.04, 9.90, 5.12, 9.91, 4.98, 7.70** —
+all ten passing, the phone number the tightest at 4.98.
+
+If you change the photograph, the blur, or any vignette stop, **re-run that
+measurement** — the numbers above are specific to this image. A brighter
+photo, or one where the sky sits lower, moves every one of them.
 
 The animated pool and rain dance in `components/Afternoon.tsx` were
 deliberately left in place — `pool-02.jpg` and `rain-dance-02.jpg` are

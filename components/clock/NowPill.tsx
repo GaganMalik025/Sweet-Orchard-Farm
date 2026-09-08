@@ -8,7 +8,16 @@ import { useClock } from "./ClockProvider";
  * so plainly and show their own clock alongside, so nobody has to work out
  * the difference themselves.
  */
-export function NowPill({ compact = false }: { compact?: boolean }) {
+export function NowPill({
+  compact = false,
+  dark = false,
+}: {
+  compact?: boolean;
+  /** Sitting on a dark ground (the masthead over its photograph). The chip
+   *  needs its own dark fill there — the default `bg-white/55` would leave
+   *  paper-coloured text on a near-white pill. */
+  dark?: boolean;
+}) {
   const clock = useClock();
   const [open, setOpen] = useState(false);
 
@@ -46,7 +55,14 @@ export function NowPill({ compact = false }: { compact?: boolean }) {
 
   return (
     <div className="inline-flex max-w-full flex-col gap-1.5">
-      <div className="inline-flex items-center gap-2.5 rounded-full border border-current/15 bg-white/55 px-4 py-2 backdrop-blur-sm">
+      <div
+        className={[
+          "inline-flex items-center gap-2.5 rounded-full border px-4 py-2 backdrop-blur-sm",
+          dark
+            ? "border-paper/25 bg-ink/70"
+            : "border-current/15 bg-white/55",
+        ].join(" ")}
+      >
         <Dot active={clock.active} ready={clock.ready} />
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] opacity-70">
           Right now at the farm
