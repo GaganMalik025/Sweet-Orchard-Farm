@@ -122,6 +122,29 @@
   white-space: nowrap;
 }
 
+/*
+ * The masthead's phone number, which is the one piece of text on this site
+ * that sits over a photograph rather than a flat ground. On a phone it is
+ * also the most useful thing on the screen, so it is set larger and heavier
+ * there — which is both the right emphasis and what carries it over the
+ * image: firelight is a light amber, and against the blurred white tower
+ * behind it the number measured 3.88:1 at 17px, under the 4.5:1 that normal
+ * text has to meet. At 19px/700 it is large text by WCAG's definition
+ * (>=18.66px bold), which asks 3:1, and it clears that with room to spare.
+ * Sized here rather than with utilities so nothing has to out-specify
+ * `.phone`'s own font-weight.
+ */
+.phone-hero {
+  font-size: 1.05rem;
+}
+
+@media (max-width: 767px) {
+  .phone-hero {
+    font-size: 19px;
+    font-weight: 700;
+  }
+}
+
 /* Dark grounds: dinner, the closing block, the footer. */
 .dark-segment .link,
 .dark-segment .phone {

@@ -148,6 +148,29 @@ things to keep it from being the generic pattern:
   the masthead. A black scrim is exactly what makes this pattern look like
   everyone else's.
 
+#### On phones it is a different vignette
+
+The desktop shape is wrong on a phone and had to be split. There, text sits
+in the left column and the darkness is weighted to match; on a 390px screen
+the same gradient holds 93% across half the viewport and leaves the picture
+nowhere to show, which is what made the masthead read as a grey-blue smear
+on a real device. Below `md` the horizontal and vertical passes are replaced
+by a single even-handed vertical one.
+
+`object-position` is also explicit below `md`. At 390px only about **28% of
+the frame's width** survives `object-cover`, and the centred slice is blank
+wall and sky — the roofline, the tower and the palms all sit to the right of
+it. `83%` lands that slice on them. Zooming further (a larger `scale`) was
+tried and is worse: the tower fills the frame as one soft mass and takes the
+roofline and palms with it. Recognition comes from seeing several things at
+once, not from magnifying one.
+
+The mobile vignette is kept as light as it can be. Measured at 360, 375,
+390, 414 and 430, a heavier version scored identically, because with the
+phone number set large nothing photo-dependent is the binding constraint any
+more — see `.phone-hero` in `globals.css`. Darkening past this buys no
+contrast and costs picture.
+
 #### The vignette is measured, not eyeballed
 
 Text over a photograph has no single background colour, so it can't be
@@ -180,6 +203,14 @@ strength; muted, it measured 3.15:1 against the bright end of the sky.
 Worst-case ratios at 1470px wide, down the page: **5.41, 4.97** (wordmark,
 large text, needs 3), **9.60, 7.14, 13.04, 9.90, 5.12, 9.91, 4.98, 7.70** —
 all ten passing, the phone number the tightest at 4.98.
+
+**The sticky contact bar hides on phones while the masthead is on screen.**
+The masthead carries its own Call now and Enquire, and at that width the two
+sat almost touching — "Call now" printed twice a few pixels apart, reading as
+a bug rather than an offer. It returns once the masthead is scrolled past.
+Desktop is unaffected: there the bar is a small pill in the bottom-right,
+nowhere near the masthead's buttons. Without JavaScript a `<noscript>` rule
+puts the bar back, so a contact route is never lost.
 
 If you change the photograph, the blur, or any vignette stop, **re-run that
 measurement** — the numbers above are specific to this image. A brighter

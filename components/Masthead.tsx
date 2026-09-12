@@ -74,7 +74,10 @@ const dusk = (pct: number) =>
 
 export function Masthead() {
   return (
-    <header className="dark-segment relative isolate overflow-hidden text-paper">
+    <header
+      id="masthead"
+      className="dark-segment relative isolate overflow-hidden text-paper"
+    >
       {/* The dusk ground lives on this layer, not on <header>. A background
           on the header itself paints over absolutely-positioned children
           sitting at a negative z-index, which silently hid the photograph
@@ -90,7 +93,18 @@ export function Masthead() {
           sizes="100vw"
           /* scale-110 pushes the blur's soft edges off-screen; without it a
              blurred `object-cover` fades out against its own container. */
-          className="scale-110 object-cover blur-[10px]"
+          /* Focal point, not centred. At 390px only ~28% of the frame's
+             width survives object-cover, and the centred slice is blank wall
+             and sky — the roofline, the tower and the palms all sit to the
+             right of it. 83% lands that slice on them instead. Desktop is
+             wide enough to keep the default.
+
+             Zooming in further was tried and is worse, not better: at
+             scale(1.6) the tower fills the frame as one soft mass and the
+             roofline and palms go with it. Recognition here comes from
+             seeing several things at once — roof, tower, greenery — not
+             from magnifying one of them. */
+          className="scale-110 object-cover object-[83%_50%] blur-[10px] md:object-center"
         />
       </div>
 
@@ -99,18 +113,44 @@ export function Masthead() {
           then drops away fast, and a vertical pass that pulls down the bright
           sky at the top. Values are measured, not guessed — see above. */}
       <div aria-hidden className="absolute inset-0" style={{ background: dusk(22) }} />
+
+      {/* Desktop: text sits in the left column, so the darkness is weighted
+          there and the right-hand side is left for the picture. */}
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="absolute inset-0 hidden md:block"
         style={{
           background: `linear-gradient(to right, ${dusk(95)}, ${dusk(93)} 52%, ${dusk(6)})`,
         }}
       />
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="absolute inset-0 hidden md:block"
         style={{
           background: `linear-gradient(to bottom, ${dusk(52)}, ${dusk(12)} 50%, ${dusk(28)})`,
+        }}
+      />
+
+      {/* Mobile: the left-weighting above is actively wrong here. The text
+          runs the full width and most of the height, so a gradient holding
+          93% across the left half covers half a 390px screen and leaves the
+          picture nowhere to show — it reads as a grey-blue smear. One
+          even-handed vertical pass instead: deepest at the top behind the
+          eyebrow and wordmark, easing through the middle, firming up again
+          under the closing note.
+
+          Kept as light as it can be. Measured at 360, 375, 390, 414 and 430
+          against the worst pixel under every line, a heavier version scored
+          identically — because with the phone number set large (see
+          `.phone-hero` in globals.css) nothing photo-dependent is the
+          binding constraint any more. The floor is the Call now button at
+          5.12, which sits on its own fill. Darkening past this buys no
+          contrast and only costs picture. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 md:hidden"
+        style={{
+          background: `linear-gradient(to bottom, ${dusk(80)}, ${dusk(70)} 42%, ${dusk(74)})`,
         }}
       />
 
@@ -156,7 +196,7 @@ export function Masthead() {
               Enquire
             </a>
           </div>
-          <a href={`tel:${PHONE_TEL}`} className="phone text-[1.05rem]">
+          <a href={`tel:${PHONE_TEL}`} className="phone phone-hero">
             {PHONE_DISPLAY}
           </a>
         </div>
