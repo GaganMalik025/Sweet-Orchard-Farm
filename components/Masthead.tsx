@@ -1,72 +1,26 @@
 import Image from "next/image";
+import { photoSrc } from "@/lib/photos";
 
 
 import { NowPill } from "@/components/clock/NowPill";
 import { ADDRESS_LINE, FARM_NAME, PHONE_DISPLAY, PHONE_TEL } from "@/lib/constants";
 
 /**
- * The masthead sits on a full-bleed photograph of the farm, deliberately
- * blurred, under a vignette mixed from the site's own dusk indigo.
+ * Full-bleed house-and-lawn photograph from photo-22-cleaned.png, deliberately
+ * blurred into atmosphere under a dusk-indigo vignette. This reverses the
+ * original no-overlay direction knowingly; keep the farm recognisable and
+ * preserve readable text rather than treating the scrim as a generic black fill.
  *
- * The blur is the point, not a workaround: a soft backdrop, not a sharp
- * photograph. But it has to stay a backdrop *of this farm* — the roofline,
- * the palms and the shape of the building should be identifiable at a
- * glance, not reduced to blue and green blocks.
+ * The desktop gradient weights darkness behind the left text column. Phones
+ * use an even vertical gradient and an explicit focal point, because object-
+ * cover reveals only a narrow slice of the wide frame there.
  *
- * Settled at 10px, compared against 8, 12 and 22. At 22px the building
- * stopped being a building. At 8px it still reads as a photograph someone
- * failed to focus. 10px is soft enough to be atmosphere and specific enough
- * that you can see a white house with a red tile roof and palms in front of
- * it within a second.
+ * Every photograph, focal point, blur or gradient change requires a fresh
+ * scripts/contrast-audit.js run. Ratios from the previous phone snapshot do
+ * not transfer. Current measurements are recorded in README.
  *
- * No pixels show at this strength, checked by zooming 2x into the worst
- * case — the white wall against the red roof tiles, which is the highest
- * local contrast in the frame. The stand-in is a 1280px phone snap being
- * stretched well past its own size, and even 10px of blur is enough to hide
- * that completely.
- *
- * The vignette is `--color-dusk`, not black. A generic black scrim is the
- * thing that makes this pattern look like every other hero; mixing the
- * darkness from a colour the site already uses keeps the masthead inside the
- * same palette as the rest of the page. Every stop below is `color-mix`ed
- * from that token, so re-tinting dusk re-tints the masthead.
- *
- * It is also load-bearing, and its shape was measured rather than eyeballed.
- * Every piece of text here sits over the photograph, so there is no single
- * background colour to check against: the real composite (photo, blurred,
- * under all three layers) was rebuilt in a canvas and sampled pixel by pixel
- * under each text box, taking the worst pixel. An even wash dark enough to
- * carry the text flattened the photograph everywhere, so the darkness is
- * concentrated where the words are instead — held almost flat across the
- * left 52%, then falling away steeply — which buys the right-hand side back
- * for the picture. The vertical pass exists because the sky is the brightest
- * thing in the frame and the eyebrow and wordmark sit right on it.
- *
- * The binding constraint is the phone number: `.phone` is firelight on dark
- * grounds, a light amber, so it needs a genuinely dark backdrop to clear
- * 4.5:1 — it, not the wordmark, is what sets how heavy the left side has to
- * be. Worst-case ratios at 1470px, in order down the page: 5.41, 4.97 (large
- * text, needs 3), 9.60, 7.14, 13.04, 9.90, 5.12, 9.91, 4.98, 7.70.
- *
- * Softening the blur from 22px to 10px cost contrast, as expected — more
- * local variation in the photograph means darker text sits over brighter
- * pixels. It did not actually break anything (the tightest, the phone
- * number, held at 4.83) but the margin had thinned to +0.26, which is not
- * enough to trust at viewport widths that crop the photograph differently.
- * So the vignette was strengthened rather than the blur put back: the
- * horizontal pass is heavier and holds further across, the sky pass deeper.
- * That restored the worst margin to +0.48. Pushing it further gains
- * nothing — past that point the floor is the Call now button at 5.12, which
- * sits on its own terracotta fill and never touches the photograph.
- *
- * The header carries `.dark-segment`, so `.link` and `.phone` pick up their
- * firelight treatment automatically, exactly as they do in the dinner and
- * closing sections.
- *
- * The image is decorative: it is blurred past the point of carrying
- * information, and everything it would tell you is in the text beside it, so
- * it takes an empty alt rather than a description a screen reader would read
- * out for nothing.
+ * The image is decorative: the copy identifies the farm and the sharp social
+ * preview and section photos show its details. Keep its alt text empty.
  */
 /** Every vignette stop is mixed from --color-dusk, never a raw black. */
 const dusk = (pct: number) =>
@@ -86,24 +40,13 @@ export function Masthead() {
           this layer doubles as the fallback ground if the image fails. */}
       <div aria-hidden className="absolute inset-0 bg-dusk">
         <Image
-          src="/photos/hero.jpg"
+          src={photoSrc("/photos/hero.jpg")}
           alt=""
           fill
           priority
           sizes="100vw"
-          /* scale-110 pushes the blur's soft edges off-screen; without it a
-             blurred `object-cover` fades out against its own container. */
-          /* Focal point, not centred. At 390px only ~28% of the frame's
-             width survives object-cover, and the centred slice is blank wall
-             and sky — the roofline, the tower and the palms all sit to the
-             right of it. 83% lands that slice on them instead. Desktop is
-             wide enough to keep the default.
-
-             Zooming in further was tried and is worse, not better: at
-             scale(1.6) the tower fills the frame as one soft mass and the
-             roofline and palms go with it. Recognition here comes from
-             seeing several things at once — roof, tower, greenery — not
-             from magnifying one of them. */
+          /* Scale keeps the blur edges outside the frame. The mobile crop
+             favours the house and palms on the right of the wide lawn view. */
           className="scale-110 object-cover object-[83%_50%] blur-[10px] md:object-center"
         />
       </div>
@@ -127,25 +70,12 @@ export function Masthead() {
         aria-hidden
         className="absolute inset-0 hidden md:block"
         style={{
-          background: `linear-gradient(to bottom, ${dusk(52)}, ${dusk(12)} 50%, ${dusk(28)})`,
+          background: `linear-gradient(to bottom, ${dusk(82)}, ${dusk(58)} 40%, ${dusk(12)} 65%, ${dusk(28)})`,
         }}
       />
 
-      {/* Mobile: the left-weighting above is actively wrong here. The text
-          runs the full width and most of the height, so a gradient holding
-          93% across the left half covers half a 390px screen and leaves the
-          picture nowhere to show — it reads as a grey-blue smear. One
-          even-handed vertical pass instead: deepest at the top behind the
-          eyebrow and wordmark, easing through the middle, firming up again
-          under the closing note.
-
-          Kept as light as it can be. Measured at 360, 375, 390, 414 and 430
-          against the worst pixel under every line, a heavier version scored
-          identically — because with the phone number set large (see
-          `.phone-hero` in globals.css) nothing photo-dependent is the
-          binding constraint any more. The floor is the Call now button at
-          5.12, which sits on its own fill. Darkening past this buys no
-          contrast and only costs picture. */}
+      {/* Phones need an even vertical vignette instead of desktop's
+          left-weighted gradient. Recheck contrast after changing these stops. */}
       <div
         aria-hidden
         className="absolute inset-0 md:hidden"
@@ -155,8 +85,7 @@ export function Masthead() {
       />
 
       <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-20 md:px-8 md:pb-24 md:pt-28">
-        {/* Full opacity, not the opacity-70 this eyebrow carries elsewhere:
-            over the bright end of the sky it measured 3.15:1 muted. */}
+        {/* Full opacity keeps this small address readable over the sky. */}
         <p className="mb-5 text-[12px] font-semibold uppercase tracking-[0.2em]">
           {ADDRESS_LINE}
         </p>

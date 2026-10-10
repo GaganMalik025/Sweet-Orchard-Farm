@@ -7,6 +7,7 @@ import {
   PHONE_TEL,
   SITE_URL,
 } from "@/lib/constants";
+import { photoSrc } from "@/lib/photos";
 
 /**
  * Structured data. Two entities:
@@ -26,7 +27,7 @@ export function LocalBusinessSchema() {
       "A quiet farmhouse in Gurgaon, tucked into the green under the Aravalli hills, with a private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule.",
     url: SITE_URL,
     telephone: PHONE_TEL,
-    image: `${SITE_URL}/photos/og.jpg`,
+    image: `${SITE_URL}${photoSrc("/photos/og.jpg")}`,
     priceRange: "₹₹",
     currenciesAccepted: "INR",
     hasMap: MAPS_URL,

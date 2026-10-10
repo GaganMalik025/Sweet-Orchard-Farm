@@ -53,12 +53,12 @@ export function Afternoon() {
         <PhotoWindow
           src="/photos/pool-02.jpg"
           ratio="3:2"
-          label="The pool at Sweet Orchard Farm"
+          label="Swimming pool surrounded by hedges and garden beds at Sweet Orchard Farm"
         />
         <PhotoWindow
           src="/photos/rain-dance-02.jpg"
           ratio="3:2"
-          label="The rain dance at Sweet Orchard Farm"
+          label="Poolside overhead frame and swimming pool at Sweet Orchard Farm"
         />
       </div>
     </div>

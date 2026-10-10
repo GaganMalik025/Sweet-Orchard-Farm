@@ -5,6 +5,7 @@ import { ClockProvider } from "@/components/clock/ClockProvider";
 import { StickyContact } from "@/components/StickyContact";
 import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
 import { SITE_URL, FARM_NAME, ADDRESS_LINE } from "@/lib/constants";
+import { photoSrc } from "@/lib/photos";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "/photos/og.jpg",
+        url: photoSrc("/photos/og.jpg"),
         width: 1200,
         height: 630,
         alt: `${FARM_NAME} — ${ADDRESS_LINE}`,
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/photos/og.jpg"],
+    images: [photoSrc("/photos/og.jpg")],
   },
   robots: {
     index: true,

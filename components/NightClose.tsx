@@ -1,34 +1,16 @@
 import { KITCHEN_RULES } from "@/lib/menu";
+import { PhotoWindow } from "@/components/PhotoWindow";
 
 /**
- * The day runs out of hours, and we say so. Nothing invented to fill the
- * slot — the kitchen closing is the last scheduled thing that happens here,
- * and that is exactly the point of the place.
- *
- * DELIBERATELY TEXT-ONLY. This section had a 16:9 PhotoWindow on
- * /photos/night.jpg, removed because every photograph we have was shot in
- * daylight and a daytime frame under "the kitchen closes" reads as a lie.
- * It is not missing — there is nothing to show yet.
- *
- * To put the photo back once real night shots exist, the change is local to
- * this file: drop a 16:9 image at /photos/night.jpg, re-import PhotoWindow,
- * wrap the block below in
- *
- *   <div className="grid gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
- *
- * (the same two-column shape GettingHere.tsx still uses), swap the
- * `max-w-2xl` on that block for `max-w-prose`, and add as its sibling:
- *
- *   <PhotoWindow src="/photos/night.jpg" ratio="16:9" dark
- *     label="Sweet Orchard Farm at night" />
- *
- * Nothing outside this file needs to change. See README, "Adding the real
- * photos".
+ * The kitchen closing is the last scheduled thing here. The night photo
+ * returned in October 2026: photo-21-cleaned.png shows the real lawn and
+ * illuminated farmhouse. Earlier daytime-only uploads could not illustrate
+ * this section accurately.
  */
 export function NightClose() {
   return (
-    <div>
-      <div className="max-w-2xl">
+    <div className="grid items-start gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
+      <div className="max-w-prose">
         <p className="text-[1.15rem] leading-relaxed">
           At half past ten the kitchen shuts and the staff go home to their
           families. After that the farm is yours and it is very, very quiet.
@@ -52,6 +34,12 @@ export function NightClose() {
           say so here than have you find out at the gate.
         </p>
       </div>
+      <PhotoWindow
+        src="/photos/night.jpg"
+        ratio="16:9"
+        dark
+        label="The lawn and illuminated farmhouse at Sweet Orchard Farm at night"
+      />
     </div>
   );
 }

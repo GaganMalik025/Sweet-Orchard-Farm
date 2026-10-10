@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { photoSrc } from "@/lib/photos";
 
 const RATIO: Record<string, string> = {
   "3:2": "aspect-[3/2]",
@@ -7,34 +8,14 @@ const RATIO: Record<string, string> = {
 };
 
 /**
- * A photo slot with a locked aspect ratio. Until a real photograph is
- * dropped in at the same path, this renders a placeholder in the site's own
- * palette. Swapping the file changes pixels and nothing else — no reflow,
- * no restructuring. See README, "Adding the real photos".
+ * Photo slots keep fixed filenames and aspect ratios to prevent layout shift.
+ * All ten assets were replaced on 10 October 2026 from the owner's
+ * Farmhouse Photos no watermark folder. README records the source for each.
  *
- * TEMPORARY PHOTOS — added 2026-09-07, due for replacement.
- * arrival.jpg, dining.jpg, rooms.jpg, pool-02.jpg, rain-dance-02.jpg and
- * og.jpg all currently hold phone-camera snaps used as stand-ins, NOT the
- * final professional set. The proper shoot is expected within 1–2 weeks;
- * replace those six files (same paths, same ratios) when it lands.
- *
- * hero.jpg is a seventh stand-in but not a slot in here — it is the
- * masthead's full-bleed background, and Masthead.tsx renders it directly.
- * It is also the one place resolution barely matters, because it is blurred
- * on purpose.
- *
- * The closing section no longer renders a photo slot at all: the phone batch
- * was shot entirely in daylight, and a daytime frame under "the kitchen
- * closes" would read as a lie, so NightClose.tsx is deliberately text-only.
- * Putting it back is a local change documented in that file.
- *
- * Two of these carry copy that was rewritten to match what the stand-in
- * actually shows, and that copy should be revisited when the photo is
- * replaced: arrival.jpg pictures the paved drive up to the house, not the
- * kutcha stretch (GettingHere.tsx), and dining.jpg pictures the garden
- * seating rather than a laid table (app/page.tsx). The kutcha road is
- * still described in full in the prose beside the arrival photo.
- * See README, "Adding the real photos", for the state of every slot.
+ * Captions must describe the actual frame: arrival shows the paved veranda
+ * approach; dining shows the covered poolside table, with no food served.
+ * The closing section now has a real night photograph. Portrait pool and
+ * rain-dance assets remain available but the animated set-pieces still render.
  */
 export function PhotoWindow({
   src,
@@ -61,7 +42,7 @@ export function PhotoWindow({
         ].join(" ")}
       >
         <Image
-          src={src}
+          src={photoSrc(src)}
           alt={label}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"

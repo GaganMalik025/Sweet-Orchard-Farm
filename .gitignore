@@ -17,3 +17,6 @@ next-env.d.ts
 # raw phone-camera uploads — the cropped, renamed, web-sized versions in
 # public/photos are what the site actually serves
 temp photos/
+
+# Owner-provided full-resolution source photos; selected JPEGs live in public/photos.
+Farmhouse Photos no watermark/

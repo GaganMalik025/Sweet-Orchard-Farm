@@ -59,7 +59,7 @@ export function Rooms() {
       <PhotoWindow
         src="/photos/rooms.jpg"
         ratio="3:2"
-        label="A room at Sweet Orchard Farm"
+        label="Guest bedroom with a blue feature wall, double bed and red sofa at Sweet Orchard Farm"
       />
     </div>
   );

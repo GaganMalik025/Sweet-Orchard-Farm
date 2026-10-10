@@ -33,8 +33,8 @@ export function GettingHere() {
       <PhotoWindow
         src="/photos/arrival.jpg"
         ratio="3:2"
-        label="The drive up to the house at Sweet Orchard Farm"
-        caption="The drive up to the house, once the rough stretch is behind you."
+        label="Paved approach beside the farmhouse veranda at Sweet Orchard Farm"
+        caption="The paved approach and veranda, once the rough stretch is behind you."
       />
     </div>
   );

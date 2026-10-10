@@ -36,74 +36,50 @@ changes, change that file.
 
 ---
 
-## Adding the real photos
+## Photos
 
-> ### ⚠️ Seven slots currently hold **temporary phone photos**
->
-> Added **2026-09-07** as stand-ins. They are ordinary phone-camera snaps,
-> **not** the final professional set, and the proper shoot is expected within
-> **1–2 weeks**. `hero.jpg`, `arrival.jpg`, `dining.jpg`, `rooms.jpg`,
-> `pool-02.jpg`, `rain-dance-02.jpg` and `og.jpg` are all due for
-> replacement — overwrite
-> them at the same paths when the real photographs land. The same warning is
-> repeated in the doc comment at the top of `components/PhotoWindow.tsx`.
->
-> **Two of them also changed the copy around them.** See *Copy tied to a
-> stand-in* below — that wording needs revisiting when the photos are
-> replaced.
+All ten assets in `public/photos` were replaced on **10 October 2026** with
+selected images from `Farmhouse Photos no watermark/`. The source PNGs remain
+untouched. Only cropping, resizing and JPEG compression are applied for the
+website; no scenes or amenities are generated.
 
-Every photo slot has a **locked aspect ratio**. Replace the file at the exact
-path below, keeping the same filename and roughly the same ratio, and nothing
-else needs to change — no layout shift, no code edits.
+Every slot retains its fixed filename and aspect ratio. The photographs were
+selected by subject and composition rather than filename order:
 
-| Replace this file | Ratio | Status | Where it appears |
+| Website asset | Ratio | Source PNG | Reason / placement |
 |---|---|---|---|
-| `public/photos/hero.jpg` | 16:9 | ⚠️ **Temp phone photo** | Masthead — full-bleed background, blurred *(not a `PhotoWindow` slot; rendered directly by `Masthead.tsx`)* |
-| `public/photos/arrival.jpg` | 3:2 | ⚠️ **Temp phone photo** | Getting here — the approach *(stand-in shows the paved drive, not the kutcha road)* |
-| `public/photos/pool-01.jpg` | 4:5 | Placeholder, unused | Pool, portrait *(the animated `PoolSurface` renders instead; drop a photo in and swap it into `components/Afternoon.tsx` if you'd rather show the real thing)* |
-| `public/photos/pool-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — pool, wide |
-| `public/photos/rain-dance-01.jpg` | 4:5 | Placeholder, unused | Rain dance, portrait *(same note as pool-01)* |
-| `public/photos/rain-dance-02.jpg` | 3:2 | ⚠️ **Temp phone photo** | Afternoon — rain dance, wide, people under it |
-| `public/photos/rooms.jpg` | 3:2 | ⚠️ **Temp phone photo** | The rooms |
-| `public/photos/dining.jpg` | 3:2 | ⚠️ **Temp phone photo** | Snacks & starters *(stand-in shows the garden seating, not a laid table)* |
-| `public/photos/night.jpg` | 16:9 | **Not rendered** | The kitchen closes — *the section is deliberately text-only; see `components/NightClose.tsx`* |
-| `public/photos/og.jpg` | 1200×630 | ⚠️ **Temp phone photo** | Social preview card (WhatsApp, Twitter, Facebook) |
+| `hero.jpg` | 16:9 | `photo-22-cleaned.png` | Wide house and lawn establishing view; blurred masthead background |
+| `arrival.jpg` | 3:2 | `photo-10-cleaned.png` | Clear paved approach and veranda; does not claim to show the kutcha road |
+| `rooms.jpg` | 3:2 | `photo-7-cleaned.png` | Bedroom showing the bed, seating and blue feature wall |
+| `pool-02.jpg` | 3:2 | `photo-23-cleaned.png` | Oblique pool view with garden and hedges |
+| `rain-dance-02.jpg` | 3:2 | `photo-13-cleaned.png` | Front view of poolside overhead frame; caption does not claim active sprinklers or guests |
+| `dining.jpg` | 3:2 | `photo-18-cleaned.png` | Covered poolside dining table; does not claim food is being served |
+| `night.jpg` | 16:9 | `photo-21-cleaned.png` | Real illuminated farmhouse and lawn; restored in the closing section |
+| `og.jpg` | 1200×630 | `photo-22-cleaned.png` | Sharp house-and-lawn image for social previews |
+| `pool-01.jpg` | 4:5 | `photo-23-cleaned.png` | Replaced portrait asset; unused while PoolSurface renders |
+| `rain-dance-01.jpg` | 4:5 | `photo-13-cleaned.png` | Replaced portrait asset; unused while RainDance renders |
 
-**The closing section renders no photo at all.** The phone batch was shot
-entirely in daylight, and a daytime frame under a section about the kitchen
-shutting at 10:30 PM would be its own kind of misleading — so rather than
-leave a placeholder graphic sitting there, `components/NightClose.tsx` drops
-the slot and lays the section out as a text-only block.
+The pool and rain-dance animations remain in place; the real photos below
+them supplement those controls. The closing section now has its own night
+photograph, because this batch finally includes nighttime coverage.
 
-That is meant to be reversible. Once real night photographs exist, the doc
-comment at the top of `NightClose.tsx` gives the exact three-line change that
-puts a `PhotoWindow` back — re-import it, restore the two-column grid wrapper,
-add the element. Nothing outside that file is involved. The `night.jpg`
-placeholder file is left in `public/photos` so the path stays valid.
+Source images are about 1600px wide. Web copies retain that resolution where
+possible, stay below 500KB, and strip source metadata. Social preview size is
+exactly 1200×630. Run `node scripts/prepare-photos.mjs` to reproduce the assets.
+The source folder is gitignored so only the selected web copies are committed.
+`lib/photos.ts` versions photo URLs, including the social preview, to bypass
+old optimised-image and browser caches. Bump PHOTO_VERSION on future swaps.
 
-**Shot list for the real photographs** — three subjects nothing in the phone
-batch covers: the **kutcha approach road** itself, a **laid table with food on
-it**, and **anything after dark**.
-
-### Copy tied to a stand-in
-
-Two slots had their image copy rewritten so it doesn't claim something the
-stand-in doesn't show. Revisit both when the real photographs land:
-
-| File | What changed | Why |
-|---|---|---|
-| `components/GettingHere.tsx` | Caption is now *“The drive up to the house, once the rough stretch is behind you.”* — it was *“The last kutcha stretch”*. Alt text follows. | The stand-in is interlocking pavers. The old caption labelled the pictured surface unpaved, which the photo flatly contradicts. |
-| `app/page.tsx` | Alt text is now *“Garden table and chairs on the lawn”* — it was *“Snacks being served”*. | Nothing is being served in the stand-in. |
-
-**The prose is untouched in both cases.** The paragraph beside the arrival
-photo still describes the kutcha road in full — it reads as a description of
-the journey rather than a caption on the image, so it stands on its own
-without a photograph backing it up.
+Still missing from this batch: the kutcha stretch itself, food on a laid table,
+and people using the rain dance. Captions must not imply these are pictured.
 
 ### Contrast
 
 Text colours are held to WCAG AA — 4.5:1 for body text, 3:1 for large text —
-measured by compositing the real painted layers, not by eye. Two palette
+measured by compositing the real painted layers, not by eye.
+`scripts/contrast-audit.js` does this: open a page, paste it into the console,
+and call `contrastAudit()`. Over the masthead it rebuilds the whole composite
+and reports the worst pixel under each line. Two palette
 facts follow from that and shouldn't be reverted casually:
 
 - **`--color-terracotta` is `#a04d24`.** It carries text in both directions
@@ -114,7 +90,7 @@ facts follow from that and shouldn't be reverted casually:
   eyebrows and the NowPill label scored 3.56:1 and 3.65:1. At 70% they clear
   5.69:1 and 5.88:1, and the same lift helps the dark segments too.
 
-A full-page sweep after that change measured 290 text elements: 46 moved from
+The earlier full-page sweep after the palette change measured 290 text elements: 46 moved from
 fail to pass, and nothing regressed. **44 still fail** — small print at other
 opacity levels (`opacity-40`, `-50`, `-60`) that this change didn't touch,
 mostly notes and unit labels in the pricing and menu sections. Worth a pass
@@ -123,122 +99,42 @@ here."* placeholder.
 
 ### The masthead photograph
 
-The masthead is a full-bleed photograph of the farm, deliberately blurred,
-under a vignette mixed from `--color-dusk`.
+The masthead uses `photo-22-cleaned.png`: the farmhouse roofline, palms and
+lawn. Its **10px blur** is intentional, with a dusk-indigo vignette rather
+than a black scrim. Desktop concentrates darkness behind the left text column;
+phones use an even vertical gradient and a crop favouring the house and palms.
 
-**This reverses an earlier decision, on purpose.** The creative direction
-rules out "a headline over a darkened photo" as the generic template look,
-and an earlier revision honoured that literally by framing the photo beside
-the text instead. The current treatment goes the other way, and leans on two
-things to keep it from being the generic pattern:
+This deliberately reverses the original creative direction's no-overlay rule.
+The sharp section photos and social preview carry the photographic detail.
+The hero remains decorative with empty alt text.
 
-- **The blur is the point, not a workaround.** The photograph reads as
-  atmosphere — shapes, colour, the light off the white walls and the green —
-  rather than as a picture you are meant to inspect. It is also what makes a
-  1280px phone snap safe to stretch across a 2560px display: there is no fine
-  detail left to go soft. Compared at 8, 10, 12 and 22px and settled at
-  **10px**: soft enough to be atmosphere, specific enough that you can see a
-  white house with a red tile roof and palms in front of it within a second.
-  At 22px the building stopped being a building; at 8px it still read as a
-  photograph someone failed to focus. No pixels show at 10px — checked by
-  zooming 2x into the highest-contrast area in the frame, the white wall
-  against the red roof tiles.
-- **The vignette is dusk indigo, never black.** Every stop is
-  `color-mix`ed from `var(--color-dusk)`, so re-tinting that token re-tints
-  the masthead. A black scrim is exactly what makes this pattern look like
-  everyone else's.
+The previous phone-photo contrast measurements are superseded. Re-run
+`scripts/contrast-audit.js` after any change to the image, blur, focal point or
+vignette, because text sits over actual image pixels rather than one colour.
 
-#### On phones it is a different vignette
+**Verified on 10 October 2026:** all 90 masthead checks passed across nine
+viewport widths. Body text requires 4.5:1; large text requires 3:1.
 
-The desktop shape is wrong on a phone and had to be split. There, text sits
-in the left column and the darkness is weighted to match; on a 390px screen
-the same gradient holds 93% across half the viewport and leaves the picture
-nowhere to show, which is what made the masthead read as a grey-blue smear
-on a real device. Below `md` the horizontal and vertical passes are replaced
-by a single even-handed vertical one.
+| Viewport | Text elements checked | Lowest body-text ratio | Lowest large-text ratio | Failures |
+|---|---|---|---|---|
+| 360px | 10 | 5.12:1 | 3.44:1 | 0 |
+| 375px | 10 | 5.12:1 | 3.44:1 | 0 |
+| 390px | 10 | 5.12:1 | 3.44:1 | 0 |
+| 414px | 10 | 5.12:1 | 3.42:1 | 0 |
+| 430px | 10 | 5.12:1 | 3.48:1 | 0 |
+| 768px | 10 | 4.77:1 | 5.57:1 | 0 |
+| 1024px | 10 | 4.92:1 | 5.57:1 | 0 |
+| 1470px | 10 | 4.92:1 | 6.48:1 | 0 |
+| 2560px | 10 | 4.91:1 | 8.18:1 | 0 |
 
-`object-position` is also explicit below `md`. At 390px only about **28% of
-the frame's width** survives `object-cover`, and the centred slice is blank
-wall and sky — the roofline, the tower and the palms all sit to the right of
-it. `83%` lands that slice on them. Zooming further (a larger `scale`) was
-tried and is worse: the tower fills the frame as one soft mass and takes the
-roofline and palms with it. Recognition comes from seeing several things at
-once, not from magnifying one.
+The audit excludes hidden responsive layers, recognises CSS default vertical
+gradients, and applies image scaling after object-position. The desktop sky
+pass was strengthened for this photograph; mobile keeps its even vignette.
 
-The mobile vignette is kept as light as it can be. Measured at 360, 375,
-390, 414 and 430, a heavier version scored identically, because with the
-phone number set large nothing photo-dependent is the binding constraint any
-more — see `.phone-hero` in `globals.css`. Darkening past this buys no
-contrast and costs picture.
-
-#### The vignette is measured, not eyeballed
-
-Text over a photograph has no single background colour, so it can't be
-checked the way flat text can. The real composite — the photo, blurred, under
-all three layers — is rebuilt in a canvas and sampled pixel by pixel under
-every text box, taking the **worst** pixel.
-
-That measurement drove the shape. An even wash dark enough to carry the text
-flattened the photograph everywhere, so the darkness is concentrated where
-the words are instead: held almost flat across the left 46%, then falling
-away steeply, which buys the right-hand side back for the picture. A vertical
-pass pulls down the sky, which is the brightest thing in the frame and sits
-directly behind the eyebrow and the wordmark.
-
-Softening the blur costs contrast — a less-blurred photograph has more local
-variation, so text sits over brighter pixels. Going from 22px to 10px did not
-break anything outright (the tightest, the phone number, held at 4.83) but it
-thinned the worst margin to +0.26, which is not enough to trust at viewport
-widths that crop the photograph differently. The vignette was strengthened to
-recover it rather than the blur being put back. Past the current values there
-is nothing left to gain: the floor becomes the Call now button at 5.12, which
-sits on its own terracotta fill and never touches the photograph.
-
-**The binding constraint is the phone number.** `.phone` is firelight on dark
-grounds — a light amber — so it needs a genuinely dark backdrop to clear
-4.5:1. It, not the wordmark, sets how heavy the left side has to be. The
-address eyebrow also drops its usual `opacity-70` here and runs at full
-strength; muted, it measured 3.15:1 against the bright end of the sky.
-
-Worst-case ratios at 1470px wide, down the page: **5.41, 4.97** (wordmark,
-large text, needs 3), **9.60, 7.14, 13.04, 9.90, 5.12, 9.91, 4.98, 7.70** —
-all ten passing, the phone number the tightest at 4.98.
-
-**The sticky contact bar hides on phones while the masthead is on screen.**
-The masthead carries its own Call now and Enquire, and at that width the two
-sat almost touching — "Call now" printed twice a few pixels apart, reading as
-a bug rather than an offer. It returns once the masthead is scrolled past.
-Desktop is unaffected: there the bar is a small pill in the bottom-right,
-nowhere near the masthead's buttons. Without JavaScript a `<noscript>` rule
-puts the bar back, so a contact route is never lost.
-
-If you change the photograph, the blur, or any vignette stop, **re-run that
-measurement** — the numbers above are specific to this image. A brighter
-photo, or one where the sky sits lower, moves every one of them.
-
-The animated pool and rain dance in `components/Afternoon.tsx` were
-deliberately left in place — `pool-02.jpg` and `rain-dance-02.jpg` are
-separate photo slots below them, so the interactive set-pieces are untouched.
-
-The raw phone uploads are **not** in the repo: `temp photos/` is gitignored,
-since the cropped, renamed, web-sized files in `public/photos` are what the
-site actually serves.
-
-**Rules**
-
-- **Keep the filenames exactly as they are.** They're referenced in code.
-- Keep the ratio close. The frame crops to fill, so a slightly different ratio
-  is fine; a portrait photo in a 3:2 slot will lose its top and bottom.
-- Target ~2400px on the long edge, around 500KB or less as JPEG.
-- Anything you don't replace keeps rendering its placeholder. There are no
-  broken images at any point, so you can swap them in one at a time.
-- **Do `og.jpg` last** — it's the image that shows when someone shares the
-  link, so make it the best one you have.
-
-Slots marked *Placeholder* above are generated images in the site's own
-palette, each labelled with its slot and ratio. Slots marked *Temp phone
-photo* are real photographs of the farm, cropped to the locked ratio and
-compressed for the web — good enough to ship, but replace them.
+The sticky contact bar hides on phones while the masthead is visible, then
+returns below it. This was verified in a 390px browser viewport; physical
+phone behaviour remains a separate check. A noscript rule preserves contact
+access when JavaScript is disabled.
 
 ---
 
@@ -287,15 +183,17 @@ deployed domain.
 
 ### Geo-coordinates
 
-`GEO` in `lib/constants.ts` is `null`, so the JSON-LD currently ships without
-a `geo` block — a guessed pin is worse than no pin. Once the API key is in
-place, resolve the real coordinates:
+`GEO` in `lib/constants.ts` is resolved and the JSON-LD ships a `geo` block.
+To re-resolve it:
 
 ```bash
 npm run place:geo
 ```
 
-It prints a line to paste straight into `lib/constants.ts`.
+It prints a line to paste straight into `lib/constants.ts`. The value is
+hard-coded rather than fetched at runtime because coordinates don't move.
+`GEO` stays nullable: a guessed pin is worse than no pin, so if it is ever
+set back to `null` the schema drops the `geo` block instead of inventing one.
 
 ---
 
