@@ -14,8 +14,10 @@ import { photoSrc } from "@/lib/photos";
  *   - the LodgingBusiness itself, which has no opening hours (it's a stay)
  *   - the kitchen, which very much does
  *
- * `geo` is omitted entirely until real coordinates are resolved from the
- * Places API (`npm run place:geo`). A guessed pin is worse than no pin.
+ * `geo` comes from the coordinates hard-coded in lib/constants.ts, which
+ * were resolved from the Places API (`npm run place:geo`). If GEO is ever
+ * set back to null, the block is dropped rather than guessed: a wrong pin
+ * is worse than no pin.
  */
 export function LocalBusinessSchema() {
   const schema = {

@@ -24,11 +24,14 @@ export const GOOGLE_PLACE_ID = "ChIJsZmXpgMjDTkRbai01ZFSLcQ";
 export const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=Sweet%20Orchard%20Farm&query_place_id=${GOOGLE_PLACE_ID}`;
 
 /**
- * Geo-coordinates for the LocalBusiness schema.
+ * Geo-coordinates for the LocalBusiness schema, resolved from the Places API
+ * via `npm run place:geo` and hard-coded here: coordinates don't move, and
+ * structured data shouldn't depend on a live API call.
  *
- * Intentionally null until resolved from the Places API — see
- * `npm run place:geo`. We do not guess coordinates: a wrong pin in
- * structured data is worse than no pin at all.
+ * The type stays nullable on purpose. We do not guess coordinates — a wrong
+ * pin in structured data is worse than no pin — so if these ever need
+ * re-resolving, setting this back to `null` is a valid state and
+ * LocalBusinessSchema drops the `geo` block rather than emitting a guess.
  */
 export const GEO: { lat: number; lng: number } | null = { lat: 28.3405286, lng: 77.0132445 };
 
