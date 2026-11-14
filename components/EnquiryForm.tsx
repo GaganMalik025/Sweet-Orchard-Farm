@@ -2,7 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { istToday, nightsBetween } from "@/lib/ist";
-import { validateEnquiry, normaliseMobile, type EnquiryErrors } from "@/lib/validate";
+import {
+  cleanEnquiry,
+  validateEnquiry,
+  ENQUIRY_FIELDS,
+  HONEYPOT_FIELD,
+  NAME_MAX,
+  type EnquiryErrors,
+} from "@/lib/validate";
 import { composeEnquiryMessage, whatsappLink } from "@/lib/whatsapp";
 import { OCCUPANCY } from "@/lib/constants";
 
@@ -25,27 +32,38 @@ export function EnquiryForm() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
 
     const found = validateEnquiry(values, today);
     if (Object.keys(found).length) {
       setErrors(found);
-      const first = document.querySelector<HTMLElement>("[data-invalid='true']");
-      first?.focus();
+      // Work out the first bad field from `found`, not from the DOM: the
+      // error state set just above hasn't rendered yet, so anything marked
+      // invalid in the DOM right now is left over from the previous attempt.
+      // The inputs are always rendered, so the target already exists.
+      const first = ENQUIRY_FIELDS.find((k) => found[k]);
+      const el = first ? form.elements.namedItem(first) : null;
+      if (el instanceof HTMLElement) el.focus();
       return;
     }
 
-    const payload = { ...values, mobile: normaliseMobile(values.mobile) };
+    const payload = cleanEnquiry(values);
     const message = composeEnquiryMessage(payload);
     const link = whatsappLink(message);
+    const honeypot = form.elements.namedItem(HONEYPOT_FIELD);
 
     // Backup record. Deliberately not awaited: a slow or failed POST must
     // never block or swallow the enquiry. `keepalive` lets it finish after
-    // we navigate away.
+    // we navigate away. The server rebuilds the message itself, so only the
+    // fields are sent.
     try {
       void fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, nights, message }),
+        body: JSON.stringify({
+          ...payload,
+          [HONEYPOT_FIELD]: honeypot instanceof HTMLInputElement ? honeypot.value : "",
+        }),
         keepalive: true,
       }).catch(() => {});
     } catch {
@@ -60,6 +78,17 @@ export function EnquiryForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="max-w-xl">
+      {/* Honeypot: off-screen, out of the tab order and hidden from screen
+          readers, so people never fill it. Bots that fill every input do,
+          and /api/enquiry then quietly drops the backup record. Kept
+          uncontrolled and read on submit. */}
+      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Leave this empty
+          <input type="text" name={HONEYPOT_FIELD} tabIndex={-1} autoComplete="off" defaultValue="" />
+        </label>
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Your name"
@@ -70,9 +99,9 @@ export function EnquiryForm() {
               type="text"
               name="name"
               autoComplete="name"
+              maxLength={NAME_MAX}
               value={values.name}
               onChange={set("name")}
-              data-invalid={Boolean(errors.name)}
               aria-invalid={Boolean(errors.name)}
               className={inputCls}
             />
@@ -95,7 +124,6 @@ export function EnquiryForm() {
                 autoComplete="tel-national"
                 value={values.mobile}
                 onChange={set("mobile")}
-                data-invalid={Boolean(errors.mobile)}
                 aria-invalid={Boolean(errors.mobile)}
                 className={`${inputCls} tnum rounded-l-none`}
               />
@@ -112,7 +140,6 @@ export function EnquiryForm() {
               min={today}
               value={values.checkIn}
               onChange={set("checkIn")}
-              data-invalid={Boolean(errors.checkIn)}
               aria-invalid={Boolean(errors.checkIn)}
               className={`${inputCls} tnum`}
             />
@@ -129,7 +156,6 @@ export function EnquiryForm() {
               min={values.checkIn || today}
               value={values.checkOut}
               onChange={set("checkOut")}
-              data-invalid={Boolean(errors.checkOut)}
               aria-invalid={Boolean(errors.checkOut)}
               className={`${inputCls} tnum`}
             />
@@ -149,7 +175,6 @@ export function EnquiryForm() {
               inputMode="numeric"
               value={values.guests}
               onChange={set("guests")}
-              data-invalid={Boolean(errors.guests)}
               aria-invalid={Boolean(errors.guests)}
               className={`${inputCls} tnum sm:max-w-40`}
             />
