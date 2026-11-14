@@ -90,10 +90,15 @@ export function CostCalculator() {
               {MEALS.map((m) => {
                 const on = meals[m.key];
                 return (
+                  // The real checkbox is sr-only, so its own focus outline is
+                  // invisible. The label draws the same outline as the global
+                  // :focus-visible rule whenever the checkbox inside it has
+                  // keyboard focus (WCAG 2.4.7).
                   <label
                     key={m.key}
                     className={[
                       "flex cursor-pointer items-center gap-3 rounded-sm border px-3.5 py-3 transition-colors",
+                      "has-focus-visible:outline-2 has-focus-visible:outline-offset-3 has-focus-visible:outline-terracotta",
                       on
                         ? "border-terracotta bg-terracotta/8"
                         : "border-ink/20 hover:bg-ink/4",
