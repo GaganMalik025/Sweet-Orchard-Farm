@@ -170,6 +170,10 @@ public business information and live in `lib/constants.ts`.
 normalised payload. Google's raw response never reaches the browser.
 
 - Google returns **at most 5 reviews**. That's their limit.
+- Of those, the page shows **only 4- and 5-star reviews, longest text
+  first, up to three**. If none qualify, the section falls back to the Maps
+  link. The aggregate rating and review count above the cards are Google's
+  figures across all reviews and are not filtered.
 - Cached for 24 hours, so traffic doesn't cost per visitor.
 - Attribution (author name, photo, link) is rendered because Google's terms
   require it.

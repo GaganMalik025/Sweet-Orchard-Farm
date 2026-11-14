@@ -83,7 +83,8 @@ export function Reviews() {
       )}
 
       <ul className="grid gap-5 md:grid-cols-3">
-        {data.reviews.slice(0, 3).map((r, i) => (
+        {/* Already filtered, ordered and capped by /api/reviews. */}
+        {data.reviews.map((r, i) => (
           <ReviewCard key={`${r.author}-${i}`} review={r} />
         ))}
       </ul>

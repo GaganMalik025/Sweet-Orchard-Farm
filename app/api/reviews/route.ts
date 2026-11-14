@@ -23,6 +23,12 @@ export interface ReviewsPayload {
   reviews: NormalisedReview[];
 }
 
+/** Lowest star rating a review needs to be shown on the page. */
+const MIN_RATING = 4;
+
+/** How many review cards the page shows. */
+const REVIEWS_SHOWN = 3;
+
 const EMPTY: ReviewsPayload = {
   ok: false,
   rating: null,
@@ -56,7 +62,12 @@ async function fetchPlace(key: string, placeId: string): Promise<Record<string, 
  * Google Places API (New). The key is server-side only — it is read from
  * process.env here and never reaches the client bundle.
  *
- * Google returns at most 5 reviews; that is their limit, not ours.
+ * Google returns at most 5 reviews; that is their limit, not ours. Of
+ * those, the page shows only 4- and 5-star reviews, longest text first, up
+ * to three. If none qualify the list is empty and the section falls back to
+ * the Maps link. The aggregate rating and count are Google's figures for
+ * every review, and are passed through unfiltered.
+ *
  * Attribution (author name, photo, link) is required by Google's terms and
  * is rendered by ReviewCard.
  *
@@ -103,7 +114,13 @@ export async function GET() {
       text: r.originalText?.text ?? r.text?.text ?? "",
       relativeTime: r.relativePublishTimeDescription ?? "",
     }))
-    .filter((r: NormalisedReview) => r.text.trim().length > 0);
+    .filter((r: NormalisedReview) => r.text.trim().length > 0 && r.rating >= MIN_RATING)
+    // Longest text first; equal lengths fall back to the higher rating.
+    .sort(
+      (a: NormalisedReview, b: NormalisedReview) =>
+        b.text.trim().length - a.text.trim().length || b.rating - a.rating,
+    )
+    .slice(0, REVIEWS_SHOWN);
 
   // Never hand Google's raw payload to the client.
   return NextResponse.json({
