@@ -73,6 +73,44 @@ old optimised-image and browser caches. Bump PHOTO_VERSION on future swaps.
 Still missing from this batch: the kutcha stretch itself, food on a laid table,
 and people using the rain dance. Captions must not imply these are pictured.
 
+### Photos & video section
+
+Straight after the masthead, before the costs, sits a full-bleed photo
+collage that drifts slowly right to left, followed by the owner's
+walk-through video. Like the costs, it sits off the time rail.
+
+**Photos.** 18 of the owner's 25 photos, curated to drop close
+near-duplicates (photos 1, 2, 11, 14, 15, 19 and the unnumbered one). The
+list, its order and the alt text live in `lib/gallery-photos.json`. The page
+and the asset script both read it, so the source mapping is in one place.
+Columns alternate one large photo and a stacked pair. The strip loops, so
+the list length must be a multiple of six or the big/pair rhythm breaks at
+the seam, and `lib/gallery.ts` fails the build if it isn't. Web copies go
+to `public/gallery/`:
+
+```bash
+node scripts/prepare-photos.mjs gallery   # only the gallery; leaves public/photos alone
+```
+
+**Motion.** About 30px a second at every width (CSS in `globals.css`, under
+`.drift`). It pauses on mouse hover, and a *Pause photos* button stops it
+(WCAG 2.2.2). Under `prefers-reduced-motion` it doesn't move. It becomes a
+row the visitor scrolls themselves.
+
+**Video.** `Sweet Orchard_r001.mov` (1080×1920, 91MB, gitignored) is
+re-encoded to `public/video/farm-walkthrough.mp4`: 720×1280 H.264, about
+6MB, **audio removed** by the owner's choice. A poster frame is saved
+alongside it:
+
+```bash
+node scripts/prepare-video.mjs   # needs ffmpeg with libx264
+```
+
+It plays muted and looping only while on screen, has a *Pause video* button,
+and never starts on its own under reduced motion. The text beside it
+describes what the video shows. There are no people in it and no sound, so
+the copy claims neither.
+
 ### Contrast
 
 Text colours are held to WCAG AA — 4.5:1 for body text, 3:1 for large text —

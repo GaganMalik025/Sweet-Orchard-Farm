@@ -183,6 +183,99 @@
   }
 }
 
+/*
+ * Photo strip (components/gallery/PhotoDrift.tsx).
+ *
+ * Every size comes from two variables, so the large and small tiles always
+ * line up and the loop stays seamless at every width. A large tile is
+ * 3:2 at the full strip height. A small tile is 3:2 at half the height
+ * minus one gap, so two of them stacked exactly match one large tile. If
+ * --drift-h changes, update the `sizes` strings in PhotoDrift to match.
+ *
+ * Durations are set so the drift runs at about 30px a second at every
+ * breakpoint: one set is ~3,300px wide on phones, ~4,950px at md and
+ * ~5,760px at lg.
+ */
+.drift {
+  --drift-h: 240px;
+  --drift-gap: 8px;
+  --drift-duration: 110s;
+}
+
+@media (min-width: 768px) {
+  .drift {
+    --drift-h: 360px;
+    --drift-gap: 12px;
+    --drift-duration: 160s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .drift {
+    --drift-h: 420px;
+    --drift-duration: 180s;
+  }
+}
+
+.drift-viewport {
+  overflow: hidden;
+  /* Soft edges, so photos drift in and out rather than being cut off. */
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.drift-track {
+  animation: sof-marquee var(--drift-duration) linear infinite;
+  will-change: transform;
+}
+
+/* Hover pause only where hovering exists; on touch screens a tap would
+   otherwise stick the strip in place. */
+@media (hover: hover) {
+  .drift-viewport:hover .drift-track {
+    animation-play-state: paused;
+  }
+}
+
+.drift[data-paused="true"] .drift-track {
+  animation-play-state: paused;
+}
+
+/* The trailing gap belongs to each set, so the second copy starts exactly
+   one gap after the first ends and the -50% loop has no seam. */
+.drift-set {
+  gap: var(--drift-gap);
+  padding-right: var(--drift-gap);
+}
+
+.drift-pair {
+  gap: var(--drift-gap);
+}
+
+.drift-big {
+  height: var(--drift-h);
+  width: calc(var(--drift-h) * 1.5);
+}
+
+.drift-small {
+  height: calc((var(--drift-h) - var(--drift-gap)) / 2);
+  width: calc((var(--drift-h) - var(--drift-gap)) * 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-track {
+    animation: none;
+  }
+  .drift-viewport {
+    overflow-x: auto;
+  }
+}
+
+@keyframes sof-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Calculator reveal: the result assembles the way the time rail does —
    a rule drawing downward, ticks landing on it one at a time. */
 @keyframes sof-rail-draw {

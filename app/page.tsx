@@ -1,6 +1,7 @@
 import { COSTS_BLOCK, SEGMENTS } from "@/lib/schedule";
 import { RailSegment, SegmentHeading } from "@/components/rail/RailSegment";
 import { Masthead } from "@/components/Masthead";
+import { Gallery } from "@/components/Gallery";
 import { MobileNowBar } from "@/components/clock/MobileNowBar";
 import { GettingHere } from "@/components/GettingHere";
 import { Rooms } from "@/components/Rooms";
@@ -27,8 +28,11 @@ export default function Home() {
       <Masthead />
 
       <main>
+        {/* Photos and the walk-through video: off the rail, like the costs. */}
+        <Gallery />
+
         {/* Untimed: the costs block isn't part of the day, but it is the
-            first thing anyone wants after the hero. */}
+            first thing anyone wants after the pictures. */}
         <RailSegment segment={COSTS_BLOCK}>
           <SegmentHeading segment={COSTS_BLOCK} kicker="Before you ask" />
           <Rates />

@@ -84,6 +84,7 @@ export function Footer() {
             </p>
             <ul className="mt-2 space-y-1 text-[15px]">
               {[
+                ["gallery", "Photos & video"],
                 ["breakfast", "Breakfast"],
                 ["arrival", "Getting here"],
                 ["rooms", "The rooms"],

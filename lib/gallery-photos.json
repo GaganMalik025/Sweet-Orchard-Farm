@@ -1,0 +1,20 @@
+[
+  { "file": "lawn-house.jpg", "source": "photo-22-cleaned.png", "alt": "Wide lawn in front of the farmhouse, with a long table set out on the grass" },
+  { "file": "blue-room.jpg", "source": "photo-7-cleaned.png", "alt": "Bedroom with a blue patterned feature wall, a double bed and a red armchair" },
+  { "file": "veranda-columns.jpg", "source": "photo-10-cleaned.png", "alt": "Colonnaded veranda beside a paved path and clipped shrubs" },
+  { "file": "pool-night.jpg", "source": "photo-12-cleaned.png", "alt": "The pool at night under strings of lights" },
+  { "file": "sofa-room.jpg", "source": "photo-3-cleaned.png", "alt": "Room with a red sofa, a wall-mounted TV and a striped window blind" },
+  { "file": "palm-path.jpg", "source": "photo-24-cleaned.png", "alt": "Paved path between palm trees and the side of the farmhouse" },
+  { "file": "covered-dining.jpg", "source": "photo-18-cleaned.png", "alt": "Covered dining table on a patterned tiled floor beside the pool" },
+  { "file": "two-bed-room.jpg", "source": "photo-6-cleaned.png", "alt": "Room with two beds, a red sofa and a pink feature wall" },
+  { "file": "lawn-wide.jpg", "source": "photo-9-cleaned.png", "alt": "Open lawn with the farmhouse along one side" },
+  { "file": "house-night.jpg", "source": "photo-17-cleaned.png", "alt": "The farmhouse at night, pink light along the roof edge and green light in the palms" },
+  { "file": "red-room.jpg", "source": "photo-8-cleaned.png", "alt": "Bedroom with a red patterned feature wall, a double bed and a red armchair" },
+  { "file": "pool-corner.jpg", "source": "photo-23-cleaned.png", "alt": "The pool seen from a corner, with its steps and the hedges around it" },
+  { "file": "lawn-umbrella.jpg", "source": "photo-4-cleaned.png", "alt": "Table and chairs under a garden umbrella on the lawn, the farmhouse behind" },
+  { "file": "geometric-room.jpg", "source": "photo-16-cleaned.png", "alt": "Bedroom with a teal and grey geometric feature wall and a double bed" },
+  { "file": "veranda-corridor.jpg", "source": "photo-20-cleaned.png", "alt": "Veranda with a patterned tile floor running along the rooms" },
+  { "file": "pool-day.jpg", "source": "photo-13-cleaned.png", "alt": "The pool by day, with its overhead frame and hedges behind" },
+  { "file": "washroom.jpg", "source": "photo-5-cleaned.png", "alt": "Attached washroom with a glass-walled shower, a basin and a WC" },
+  { "file": "lawn-night.jpg", "source": "photo-21-cleaned.png", "alt": "The lawn at night with the farmhouse lit up behind it" }
+]

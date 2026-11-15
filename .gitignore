@@ -20,3 +20,6 @@ temp photos/
 
 # Owner-provided full-resolution source photos; selected JPEGs live in public/photos.
 Farmhouse Photos no watermark/
+
+# Owner-provided source video (~91MB); the web encode lives in public/video.
+/*.mov
