@@ -107,8 +107,10 @@ node scripts/prepare-video.mjs   # needs ffmpeg with libx264
 ```
 
 It plays muted and looping only while on screen, has a *Pause video* button,
-and never starts on its own under reduced motion. The text beside it
-describes what the video shows. There are no people in it and no sound, so
+and never starts on its own under reduced motion. Beside it, a scene
+timeline (`VIDEO_SCENES` in `lib/gallery.ts`, timed from detected cuts)
+highlights the scene playing and jumps to one when chosen. It describes only
+what the video shows. There are no people in it and no sound, so
 the copy claims neither.
 
 ### Contrast

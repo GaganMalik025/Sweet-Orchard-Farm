@@ -62,3 +62,19 @@ export const FARM_VIDEO = {
   width: 720,
   height: 1280,
 } as const;
+
+/**
+ * The scenes in the video, shown as a timeline beside it. `start` is the
+ * cut found by ffmpeg scene detection (select='gt(scene,0.25)'), in
+ * seconds; the timeline jumps to it exactly and labels it rounded down.
+ * Descriptions are what each stretch shows, checked frame by frame at one
+ * frame per second. If the video is re-cut, redo both.
+ */
+export const VIDEO_SCENES = [
+  { start: 0, title: "Along the veranda", detail: "From the paved path down the colonnaded veranda." },
+  { start: 3.12, title: "Across the lawn", detail: "The lawn, a long table set out, and a table under the umbrella." },
+  { start: 9.48, title: "The pool", detail: "Two angles on the pool, with the hedges and the house behind." },
+  { start: 13.28, title: "Covered dining", detail: "The dining table under the roof, beside the pool." },
+  { start: 17.08, title: "The rooms", detail: "Five of the rooms, and a washroom." },
+  { start: 26.92, title: "After dark", detail: "The house, the dining area and the pool under lights, then the floodlit lawn." },
+] as const;

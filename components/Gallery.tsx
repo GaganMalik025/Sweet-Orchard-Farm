@@ -1,5 +1,5 @@
 import { PhotoDrift } from "@/components/gallery/PhotoDrift";
-import { FarmVideo } from "@/components/gallery/FarmVideo";
+import { Walkthrough } from "@/components/gallery/Walkthrough";
 
 /**
  * Photos and the walk-through video, straight after the masthead and before
@@ -40,23 +40,8 @@ export function Gallery() {
 
       <PhotoDrift />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-14 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16 md:px-8 md:pb-24 md:pt-20">
-        <div className="max-w-prose">
-          <h3 className="font-display text-[clamp(1.6rem,4vw,2.2rem)] leading-tight">
-            A walk round the farm
-          </h3>
-          <p
-            id="farm-video-description"
-            className="mt-3 text-[1.05rem] leading-relaxed"
-          >
-            From the veranda out across the lawn, past the pool to the covered
-            dining table, through three of the rooms, and back onto the lawn
-            after dark.
-          </p>
-        </div>
-        <div className="mx-auto w-full max-w-[300px] md:mx-0 md:w-[300px] lg:w-[340px] lg:max-w-[340px]">
-          <FarmVideo describedBy="farm-video-description" />
-        </div>
+      <div className="mx-auto max-w-6xl px-4 pb-16 pt-14 md:px-8 md:pb-24 md:pt-16">
+        <Walkthrough />
       </div>
     </section>
   );
