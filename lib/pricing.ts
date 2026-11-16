@@ -1,5 +1,4 @@
 import { PER_HEAD } from "./menu";
-import { OCCUPANCY } from "./constants";
 
 /**
  * ALL MONEY ON THE SITE RUNS THROUGH THIS FILE.
@@ -35,7 +34,12 @@ export const NO_MEALS: MealSelection = {
 export interface StayBand {
   /** First person (1-based) this rate applies to. */
   from: number;
-  /** Last person it applies to; the final band runs to the group maximum. */
+  /**
+   * Last person it applies to. The final band is open-ended (Infinity) and
+   * is described as "above 25", never as a closed range: the group cap is a
+   * separate rule (OCCUPANCY.maxGroup), enforced by the calculator and the
+   * enquiry form, not part of the rate.
+   */
   to: number;
   /** Per person, per night. */
   rate: number;
@@ -44,7 +48,7 @@ export interface StayBand {
 export const STAY_BANDS: readonly StayBand[] = [
   { from: 1, to: 12, rate: 1250 },
   { from: 13, to: 25, rate: 1000 },
-  { from: 26, to: OCCUPANCY.maxGroup, rate: 500 },
+  { from: 26, to: Infinity, rate: 500 },
 ];
 
 /**
@@ -53,9 +57,9 @@ export const STAY_BANDS: readonly StayBand[] = [
  */
 export const CALC_MAX_NIGHTS = 99;
 
-/** "1–12", "13–25", "26–30". */
+/** "1–12", "13–25", "above 25". */
 export function bandRange(b: StayBand): string {
-  return `${b.from}–${b.to}`;
+  return Number.isFinite(b.to) ? `${b.from}–${b.to}` : `above ${b.from - 1}`;
 }
 
 export interface QuoteLine {
@@ -81,15 +85,21 @@ export interface Quote {
 /**
  * The stay for one night, split by band. Only the bands the group reaches
  * appear, each labelled with the people it actually covers: 28 people read
- * "people 1–12", "people 13–25", "people 26–28". A group entirely inside
- * the first band is a single line, labelled just "Stay".
+ * "people 1–12", "people 13–20". The open-ended last band always reads
+ * "people above 25", whatever the group size; its count shows how many.
+ * A group entirely inside the first band is a single line, labelled just
+ * "Stay".
  */
 export function stayLines(people: number): QuoteLine[] {
   const lines = STAY_BANDS.flatMap((b) => {
     const last = Math.min(people, b.to);
     const count = Math.max(0, last - (b.from - 1));
     if (!count) return [];
-    const who = count === 1 ? `person ${b.from}` : `people ${b.from}–${last}`;
+    const who = !Number.isFinite(b.to)
+      ? `people ${bandRange(b)}`
+      : count === 1
+        ? `person ${b.from}`
+        : `people ${b.from}–${last}`;
     return [{ label: `Stay, ${who}`, count, rate: b.rate, amount: count * b.rate }];
   });
   if (lines.length === 1) lines[0].label = "Stay";

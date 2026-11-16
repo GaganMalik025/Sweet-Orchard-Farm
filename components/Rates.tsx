@@ -77,7 +77,9 @@ export function Rates() {
                 note={
                   b.from === 1
                     ? `each of the first ${b.to} people`
-                    : `each person from the ${ordinal(b.from)} to the ${ordinal(b.to)}`
+                    : Number.isFinite(b.to)
+                      ? `each person from the ${ordinal(b.from)} to the ${ordinal(b.to)}`
+                      : `each person after the ${ordinal(b.from - 1)}`
                 }
                 amount={b.rate}
               />

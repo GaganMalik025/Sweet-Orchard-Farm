@@ -43,8 +43,9 @@ export const OCCUPANCY = {
   sleeps: 14,
   /**
    * Largest group taken for an overnight stay, with extra mattresses beyond
-   * `sleeps`. Owner-confirmed 16 November 2026. The calculator, the enquiry
-   * form and the last pricing band all stop here.
+   * `sleeps`. Owner-confirmed 16 November 2026. The calculator and the
+   * enquiry form stop here. The last pricing band itself is open-ended and
+   * reads "above 25" (lib/pricing.ts).
    */
   maxGroup: 30,
 } as const;
