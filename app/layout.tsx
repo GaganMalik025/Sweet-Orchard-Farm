@@ -4,7 +4,7 @@ import "./globals.css";
 import { ClockProvider } from "@/components/clock/ClockProvider";
 import { StickyContact } from "@/components/StickyContact";
 import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
-import { SITE_URL, FARM_NAME, ADDRESS_LINE } from "@/lib/constants";
+import { SITE_URL, FARM_NAME, ADDRESS_LINE, OCCUPANCY } from "@/lib/constants";
 import { photoSrc } from "@/lib/photos";
 
 const fraunces = Fraunces({
@@ -22,7 +22,7 @@ const interTight = Inter_Tight({
 
 const TITLE = `${FARM_NAME} — farmhouse stay in Gurgaon`;
 const DESCRIPTION =
-  "A quiet farmhouse in Gurgaon, tucked into the green under the Aravalli hills. A private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule. Sleeps 14.";
+  `A quiet farmhouse in Gurgaon, tucked into the green under the Aravalli hills. A private pool filled from our own tubewell and properly chlorinated, a rain dance, and meals on a fixed daily schedule. Sleeps ${OCCUPANCY.sleeps}, and groups of up to ${OCCUPANCY.maxGroup} with extra mattresses.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

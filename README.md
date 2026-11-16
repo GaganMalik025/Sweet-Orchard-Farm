@@ -299,15 +299,19 @@ fact doesn't exist, the site says nothing rather than inventing one:
   category, at their own per-head rates (both ₹500). Both render the same
   `ChooseOneSet` component from the same `SET_MEAL_CATEGORIES` data — change
   a dish once and it updates in both places.
-- **The stay rate (₹1,500 per head) carries no time period.** Whether it is
-  per night or per stay hasn't been confirmed, so the site doesn't say.
-- **All pricing runs through `lib/pricing.ts`.** The published worked
-  examples and the interactive calculator call the same `perHead` /
-  `totalFor` / `breakdown` functions, so they cannot disagree. The stay
-  charge is always part of the total; meals are add-ons.
-- **Wedding prices are flat, per event, and exclude food.** ₹30,000 up to 50
-  guests, ₹35,000 for 51–80. Styled deliberately unlike the per-head list so
-  they aren't misread as per person.
+- **The stay is per person, per night, stepped by group size** (owner-
+  confirmed 16 November 2026). Like tax bands: the first 12 people are
+  ₹1,250 each, people 13–25 are ₹1,000 each, and everyone after 25 is
+  ₹500. The bands stack, so 28 people pay 12 × ₹1,250 + 13 × ₹1,000 +
+  3 × ₹500, and the total never drops when someone joins. Meals are added
+  per head, once per night. Groups of up to 30 (`OCCUPANCY.maxGroup`). The
+  beds sleep 14; extra mattresses cover the rest.
+- **All pricing runs through `lib/pricing.ts`.** The bands are
+  `STAY_BANDS`; the rate card, both worked examples and the calculator call
+  the same `quote(people, nights, meals)`, so they cannot disagree. The stay
+  is always part of the total; meals are add-ons.
+- **No wedding prices.** The flat wedding tiers were withdrawn on
+  16 November 2026 and removed from the site.
 - **No tariff.** Room rates aren't published anywhere in the source material,
   so they go through WhatsApp.
 - **Raita** sits with the set meal, matching the printed card. (An earlier

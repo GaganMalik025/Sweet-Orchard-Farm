@@ -38,14 +38,14 @@ export function Rooms() {
           </li>
           <li className="flex items-baseline gap-5 py-5">
             <span className="tnum font-display text-[2.4rem] leading-none">
-              {OCCUPANCY.maxGuests}
+              {OCCUPANCY.sleeps}
             </span>
             <span className="min-w-0">
               <span className="block text-[17px] font-medium">
                 guests, comfortably
               </span>
               <span className="block text-[14px] opacity-60">
-                extra mattresses can be arranged if you&rsquo;re more — just ask
+                extra mattresses for groups of up to {OCCUPANCY.maxGroup} — just ask
               </span>
             </span>
           </li>

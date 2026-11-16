@@ -39,7 +39,14 @@ export const OCCUPANCY = {
   kingRooms: 5,
   queenBedRooms: 1,
   queenBedsPerRoom: 2,
-  maxGuests: 14,
+  /** Guests the beds sleep comfortably. */
+  sleeps: 14,
+  /**
+   * Largest group taken for an overnight stay, with extra mattresses beyond
+   * `sleeps`. Owner-confirmed 16 November 2026. The calculator, the enquiry
+   * form and the last pricing band all stop here.
+   */
+  maxGroup: 30,
 } as const;
 
 export const SITE_URL =

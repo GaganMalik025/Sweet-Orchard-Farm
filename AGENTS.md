@@ -40,8 +40,8 @@ else.
 
 **Where a fact doesn't exist, the site says nothing.** This is the strongest
 content rule here and it is deliberate: no bonfire, no fixed hours for the
-pool or rain dance, no published room tariff, and the stay rate carries no
-time period because per-night vs per-stay was never confirmed. Don't fill
+pool or rain dance, no published room tariff, and no wedding price (the
+tiers were withdrawn). Don't fill
 these gaps with plausible copy. `README.md` → *Notes on content* lists them.
 
 **Reviews are never invented.** `/api/reviews` degrades to a link to the
@@ -131,5 +131,6 @@ State of things as of the last session, so you don't re-derive it:
   the return could not be tested because of the IntersectionObserver trap
   above. If it doesn't come back on a device, a scroll-position fallback is
   the fix.
-- **Unconfirmed fact:** whether the ₹1,500 stay rate is per night or per stay.
-  Until someone asks the owner, the site must keep saying neither.
+- **Resolved 16 November 2026:** the stay is per person, per night, in
+  stepped bands (see `lib/pricing.ts`), for groups of up to 30. The old
+  "per night or per stay" uncertainty is gone; the site now says per night.

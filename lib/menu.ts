@@ -9,13 +9,8 @@ export const PER_HEAD = {
   dinner: 500,
 } as const;
 
-/**
- * Staying without any food.
- *
- * Deliberately not labelled per night or per stay — that hasn't been
- * confirmed, so the site states the rate and nothing more.
- */
-export const STAY_PER_HEAD = 1500;
+// The stay rate isn't on the menu card. It lives in lib/pricing.ts as
+// STAY_BANDS.
 
 /** Breakfast: ₹350 per head, choose any three. */
 export const BREAKFAST_CHOICES = [

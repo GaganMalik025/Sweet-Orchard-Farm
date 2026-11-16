@@ -163,7 +163,7 @@ export function EnquiryForm() {
         />
         <Field
           label="Number of guests"
-          hint={`we sleep ${OCCUPANCY.maxGuests}`}
+          hint={`groups of up to ${OCCUPANCY.maxGroup}`}
           error={errors.guests}
           className="sm:col-span-2"
           input={

@@ -1,54 +1,61 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { rupees } from "@/lib/menu";
-import {
-  breakdown,
-  perHead,
-  totalFor,
-  NO_MEALS,
-  type MealSelection,
-} from "@/lib/pricing";
+import { PER_HEAD, rupees } from "@/lib/menu";
+import { OCCUPANCY } from "@/lib/constants";
+import { CALC_MAX_NIGHTS, NO_MEALS, quote, type MealSelection, type Quote } from "@/lib/pricing";
 
-interface Result {
-  people: number;
-  lines: { label: string; amount: number }[];
-  perHead: number;
-  total: number;
+interface Result extends Quote {
   /** Bumped on every calculation so the reveal replays. */
   run: number;
 }
 
-const MEALS: { key: keyof MealSelection; label: string; note: string }[] = [
-  { key: "breakfast", label: "Breakfast", note: "₹350 per head" },
-  { key: "lunch", label: "Lunch", note: "₹500 per head" },
-  { key: "dinner", label: "Dinner", note: "₹500 per head" },
+const MEALS: { key: keyof MealSelection; label: string }[] = [
+  { key: "breakfast", label: "Breakfast" },
+  { key: "lunch", label: "Lunch" },
+  { key: "dinner", label: "Dinner" },
 ];
+
+type Errors = { people?: string; nights?: string };
+
+/** A whole number from min to max, or null. */
+function wholeNumber(raw: string, min: number, max: number): number | null {
+  const s = raw.trim();
+  if (!/^\d+$/.test(s)) return null;
+  const n = Number(s);
+  return n >= min && n <= max ? n : null;
+}
 
 export function CostCalculator() {
   const [people, setPeople] = useState("");
+  const [nights, setNights] = useState("1");
   const [meals, setMeals] = useState<MealSelection>(NO_MEALS);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<Result | null>(null);
   const runRef = useRef(0);
 
   function calculate() {
-    const n = Number(people);
-    if (!people.trim() || !Number.isInteger(n) || n < 1) {
-      setError("Tell us how many people are coming.");
+    const p = wholeNumber(people, 1, OCCUPANCY.maxGroup);
+    const n = wholeNumber(nights, 1, CALC_MAX_NIGHTS);
+    const found: Errors = {};
+    if (p === null) {
+      found.people = people.trim()
+        ? `We take groups of 1 to ${OCCUPANCY.maxGroup}.`
+        : "Tell us how many people are coming.";
+    }
+    if (n === null) {
+      found.nights = `Enter a number of nights from 1 to ${CALC_MAX_NIGHTS}.`;
+    }
+    setErrors(found);
+    if (p === null || n === null) {
       setResult(null);
       return;
     }
-    setError(null);
     runRef.current += 1;
-    setResult({
-      people: n,
-      lines: breakdown(meals),
-      perHead: perHead(meals),
-      total: totalFor(n, meals),
-      run: runRef.current,
-    });
+    setResult({ ...quote(p, n, meals), run: runRef.current });
   }
+
+  const onEnter = (e: React.KeyboardEvent) => e.key === "Enter" && calculate();
 
   return (
     <div className="mt-14 border-t border-ink/12 pt-10">
@@ -61,29 +68,41 @@ export function CostCalculator() {
 
       <div className="grid gap-10 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)] md:gap-14">
         <div>
-          <label className="block">
-            <span className="mb-1.5 block text-[13px] font-semibold uppercase tracking-[0.12em] opacity-65">
-              How many people
-            </span>
-            <input
-              type="number"
-              min={1}
-              step={1}
-              inputMode="numeric"
+          <div className="grid grid-cols-2 gap-4 sm:max-w-80">
+            <NumberField
+              label="People"
               value={people}
-              onChange={(e) => {
-                setPeople(e.target.value);
-                setError(null);
+              onChange={(v) => {
+                setPeople(v);
+                setErrors((e) => ({ ...e, people: undefined }));
               }}
-              onKeyDown={(e) => e.key === "Enter" && calculate()}
-              aria-invalid={Boolean(error)}
-              aria-describedby={error ? "calc-error" : undefined}
-              className="tnum w-full rounded-sm border border-ink/25 bg-transparent px-3.5 py-3 text-[17px] outline-none transition-colors focus:border-terracotta aria-[invalid=true]:border-terracotta sm:max-w-44"
+              onKeyDown={onEnter}
+              error={errors.people}
+              errorId="calc-people-error"
+              max={OCCUPANCY.maxGroup}
             />
-          </label>
+            <NumberField
+              label="Nights"
+              value={nights}
+              onChange={(v) => {
+                setNights(v);
+                setErrors((e) => ({ ...e, nights: undefined }));
+              }}
+              onKeyDown={onEnter}
+              error={errors.nights}
+              errorId="calc-nights-error"
+              max={CALC_MAX_NIGHTS}
+            />
+          </div>
+          {(errors.people || errors.nights) && (
+            <div role="alert" className="mt-2 space-y-1 text-[13px] text-terracotta">
+              {errors.people && <p id="calc-people-error">{errors.people}</p>}
+              {errors.nights && <p id="calc-nights-error">{errors.nights}</p>}
+            </div>
+          )}
 
           <fieldset className="mt-7">
-            <legend className="mb-2.5 text-[13px] font-semibold uppercase tracking-[0.12em] opacity-65">
+            <legend className="mb-2.5 text-[13px] font-semibold uppercase tracking-[0.12em] opacity-70">
               Meals
             </legend>
             <div className="space-y-2">
@@ -134,7 +153,9 @@ export function CostCalculator() {
                     </span>
                     <span className="min-w-0">
                       <span className="block text-[16px] font-medium">{m.label}</span>
-                      <span className="tnum block text-[13px] opacity-70">{m.note}</span>
+                      <span className="tnum block text-[13px] opacity-70">
+                        {rupees(PER_HEAD[m.key])} per head, per night
+                      </span>
                     </span>
                   </label>
                 );
@@ -149,19 +170,13 @@ export function CostCalculator() {
           >
             Calculate Cost
           </button>
-
-          {error && (
-            <p id="calc-error" role="alert" className="mt-3 text-[13px] text-terracotta">
-              {error}
-            </p>
-          )}
         </div>
 
         <div className="min-h-[1px]">
           {result ? (
             <ResultRail key={result.run} result={result} />
           ) : (
-            <p className="text-[14px] italic opacity-45">
+            <p className="text-[14px] italic opacity-70">
               Your total will appear here.
             </p>
           )}
@@ -171,11 +186,50 @@ export function CostCalculator() {
   );
 }
 
+function NumberField({
+  label,
+  value,
+  onChange,
+  onKeyDown,
+  error,
+  errorId,
+  max,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  onKeyDown: (e: React.KeyboardEvent) => void;
+  error?: string;
+  errorId: string;
+  max: number;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-[13px] font-semibold uppercase tracking-[0.12em] opacity-70">
+        {label}
+      </span>
+      <input
+        type="number"
+        min={1}
+        max={max}
+        step={1}
+        inputMode="numeric"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={onKeyDown}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        className="tnum w-full rounded-sm border border-ink/25 bg-transparent px-3.5 py-3 text-[17px] outline-none transition-colors focus:border-terracotta aria-[invalid=true]:border-terracotta"
+      />
+    </label>
+  );
+}
+
 /**
  * The reveal. Rather than a spinner or a fade, the result assembles the way
- * the rest of the page reads: a hairline rail draws downward, each per-head
- * line ticks onto it in sequence, and the total lands last and counts up in
- * tabular figures — the same rail-and-marker language as the day above.
+ * the rest of the page reads: a hairline rail draws downward, each line of
+ * the working ticks onto it in sequence, and the total lands last and counts
+ * up in tabular figures — the same rail-and-marker language as the day above.
  *
  * Terracotta throughout: the reserved water teal never appears outside the
  * pool and the rain dance.
@@ -201,12 +255,13 @@ function ResultRail({ result }: { result: Result }) {
       ? undefined
       : { animation: `${name} ${dur}ms cubic-bezier(.2,.7,.3,1) ${delay}ms both` };
 
+  const nightWord = result.nights === 1 ? "night" : "nights";
+  const peopleWord = result.people === 1 ? "person" : "people";
+
   const summary = [
-    ...result.lines.map((l) => `${l.label} ${rupees(l.amount)}`),
-    `${rupees(result.perHead)} per head`,
-    `Total fixed cost ${rupees(result.total)} for ${result.people} ${
-      result.people === 1 ? "person" : "people"
-    }`,
+    ...result.lines.map((l) => `${l.label}: ${l.count} × ${rupees(l.rate)} = ${rupees(l.amount)}`),
+    `${rupees(result.perNight)} per night`,
+    `Total ${rupees(result.total)} for ${result.people} ${peopleWord}, ${result.nights} ${nightWord}`,
   ].join(". ");
 
   return (
@@ -241,7 +296,12 @@ function ResultRail({ result }: { result: Result }) {
               aria-hidden
               className="absolute -left-[22px] top-[0.55em] h-px w-3 bg-ink/35"
             />
-            <span className="text-[16px] opacity-80">{l.label}</span>
+            <span className="text-[16px]">
+              <span className="opacity-80">{l.label}</span>
+              <span className="tnum block whitespace-nowrap text-[13px] opacity-70 sm:ml-2 sm:inline">
+                {l.count} × {rupees(l.rate)}
+              </span>
+            </span>
             <span aria-hidden className="leader" />
             <span className="tnum shrink-0 text-[16px]">{rupees(l.amount)}</span>
           </li>
@@ -250,12 +310,12 @@ function ResultRail({ result }: { result: Result }) {
 
       <div
         className="relative mt-4 flex items-baseline border-t border-ink/15 pt-4"
-        style={anim((rows + 0.5) * STEP, "sof-tick-in")}
+        style={anim((result.lines.length + 0.5) * STEP, "sof-tick-in")}
       >
-        <span className="text-[16px] font-medium">Per head</span>
+        <span className="text-[16px] font-medium">Per night</span>
         <span aria-hidden className="leader" />
         <span className="tnum shrink-0 text-[16px] font-semibold">
-          {rupees(result.perHead)}
+          {rupees(result.perNight)}
         </span>
       </div>
 
@@ -266,7 +326,7 @@ function ResultRail({ result }: { result: Result }) {
           style={reduced ? undefined : { animation: "sof-pulse 2.8s ease-out 1" }}
         />
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-70">
-          Total Fixed Cost
+          Total
         </p>
         <p
           aria-hidden="true"
@@ -275,8 +335,8 @@ function ResultRail({ result }: { result: Result }) {
           {rupees(shown)}
         </p>
         <p className="tnum mt-2 text-[14px] opacity-70">
-          {rupees(result.perHead)} × {result.people}{" "}
-          {result.people === 1 ? "person" : "people"}
+          {rupees(result.perNight)} × {result.nights} {nightWord}, for{" "}
+          {result.people} {peopleWord}
         </p>
       </div>
     </div>

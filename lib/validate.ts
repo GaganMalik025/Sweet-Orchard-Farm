@@ -1,4 +1,5 @@
 import { nightsBetween } from "./ist";
+import { OCCUPANCY } from "./constants";
 
 export interface EnquiryValues {
   name: string;
@@ -104,6 +105,8 @@ export function validateEnquiry(values: EnquiryValues, today: string): EnquiryEr
   const guests = values.guests.trim();
   if (!GUESTS.test(guests) || Number(guests) < 1) {
     errors.guests = "How many of you are coming?";
+  } else if (Number(guests) > OCCUPANCY.maxGroup) {
+    errors.guests = `We take groups of up to ${OCCUPANCY.maxGroup}.`;
   }
 
   return errors;

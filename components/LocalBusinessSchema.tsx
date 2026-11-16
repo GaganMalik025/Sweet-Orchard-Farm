@@ -51,7 +51,7 @@ export function LocalBusinessSchema() {
         }
       : {}),
     numberOfRooms: OCCUPANCY.kingRooms + OCCUPANCY.queenBedRooms,
-    maximumAttendeeCapacity: OCCUPANCY.maxGuests,
+    maximumAttendeeCapacity: OCCUPANCY.maxGroup,
     amenityFeature: [
       { "@type": "LocationFeatureSpecification", name: "Private swimming pool", value: true },
       { "@type": "LocationFeatureSpecification", name: "Tubewell-filled, chlorinated pool water", value: true },
